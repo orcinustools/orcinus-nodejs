@@ -28,5 +28,16 @@
   "homepage": "https://github.com/anak10thn/orcinus#readme",
   "dependencies": {
     "commander": "^2.9.0"
+  },
+  "nexe": {
+    "input": "cli.js",
+    "output": "orcinus",
+    "temp": "build/",
+    "debug": false,
+    "runtime": {
+      "framework": "node",
+      "version": "5.10.0",
+      "ignoreFlags": true
+    }
   }
 }
