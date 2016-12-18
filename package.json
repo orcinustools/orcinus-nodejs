@@ -34,6 +34,7 @@
     "output": "orcinus",
     "temp": "build/",
     "debug": false,
+    "nodeMakeArgs": ["-j", "8"],
     "runtime": {
       "framework": "node",
       "version": "5.10.0",
