@@ -1,0 +1,26 @@
+{
+  "name": "orcinus",
+  "version": "0.1.0",
+  "description": "Docker Swarm Compose Tools",
+  "main": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anak10thn/orcinus.git"
+  },
+  "keywords": [
+    "docker",
+    "swarm",
+    "compose",
+    "tools",
+    "utility"
+  ],
+  "author": "Ibnu Yahya <anak10thn@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anak10thn/orcinus/issues"
+  },
+  "homepage": "https://github.com/anak10thn/orcinus#readme"
+}
