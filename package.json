@@ -6,6 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "orcinus": "./cli.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/anak10thn/orcinus.git"
@@ -22,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/anak10thn/orcinus/issues"
   },
-  "homepage": "https://github.com/anak10thn/orcinus#readme"
+  "homepage": "https://github.com/anak10thn/orcinus#readme",
+  "dependencies": {
+    "commander": "^2.9.0"
+  }
 }
