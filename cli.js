@@ -1,57 +1,120 @@
 var program = require('commander');
-var yml = require('yamljs');
 var pkg = require('./package.json');
 var proc = require('process');
 var chp = require('child_process');
+var colors = require('colors');
 var exec  = chp.exec;
 var spawn = chp.spawn;
-var svc,app;
+var data;
 
-var parser = function(file){
-  return yml.load(file);
-}
-
-var obj = function(val){
-  return Object.keys(val);
-}
-
-var create = function(val){
-  if(svc.indexOf('services') <= 0) {
-    console.log("Service can't defined.");
-    proc.exit(1);
-  }
-  app.forEach(function(v){
-    console.log(v);
-    createService(v);
-  })
-}
-
-var createService = function(val){
-  exec("docker service ls -f 'name="+val+"' -q",(e, stdout, stderr)=> {
-    if (e instanceof Error) {
-        console.error(e);
-        throw e;
-    }
-    if(stdout){
-      console.log(stdout);
-    }
-    else{
-      console.log("no exist")
-    }
-  })
-}
+/*module exports*/
+var utils = require("./lib/utils");
+var create = require("./lib/create");
+var update = require("./lib/update");
+var list = require("./lib/list");
+var scale = require("./lib/scale");
+var ps = require("./lib/ps");
+var rm = require("./lib/rm");
+var inspect = require("./lib/inspect");
 
 program
-.arguments('<manifest>')
-.version(pkg.version)
-.option('-c, --create', 'file list')
+.arguments('<file-config.yml>')
+.version("orcinus version "+pkg.version)
+.option('create', 'Create service')
+.option('rm','remove', 'Remove all service')
+.option('ls', 'List all service')
+.option('ps', 'List all process')
+.option('scale [service_name=num_scale]', 'scale service')
+.option('stop', 'Stop all service')
+.option('start', 'Start all service')
+.option('inspect', 'Inspect all service')
+.option('update', 'Update service')
 .action(function(file) {
   if(file){
-    var data = parser(file);
-    svc = obj(data);
-    app = obj(data.services);
-    if(program.create){
-      create(data);
+    /*parsing file*/
+    data = utils.parser(file);
+    /*option validation*/
+    cli = [];
+    prog = utils.obj(program);
+    program.options.forEach((v)=>{
+      if(prog.indexOf(v.flags) >= 0) cli.push(v.flags);
+    })
+    if(cli.length > 1){
+      console.log("More options.");
+      program.outputHelp(make_red);
+      process.exit(0);
     }
   }
 }).parse(process.argv);
+
+
+if(program.create){
+  if(!data){
+    err()
+  }
+  create.init(data);
+}
+
+if(program.update){
+  if(!data){
+    err()
+  }
+  update.init(data);
+}
+
+if(program.ls){
+  if(!data){
+    err()
+  }
+  list.init(data);
+}
+
+if(program.ps){
+  if(!data){
+    err()
+  }
+  ps.init(data);
+}
+
+if(program.rm){
+  if(!data){
+    err()
+  }
+  rm.init(data);
+}
+
+if(program.inspect){
+  if(!data){
+    err()
+  }
+  inspect.init(data);
+}
+
+if(program.scale){
+  if(typeof(program.scale) == 'string'){
+    var scaleData = program.scale.split("=");
+    if(scaleData.length == 2){
+      scale(scaleData[0],scaleData[1]);
+    }
+    else{
+      err();
+    }
+  }
+  else{
+    err();
+  }
+}
+
+function make_red(txt) {
+  return colors.red(txt);
+}
+
+function err(){
+  program.outputHelp();
+  console.log('  Examples:');
+  console.log('');
+  console.log('    $ orcinus scale app=2');
+  console.log('    $ orcinus [options] docker-compose-file.yml');
+  console.log('');
+  process.exit(0);
+}
