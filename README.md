@@ -1,5 +1,5 @@
 # Orcinus
-Tools service management for docker swarm mode.
+Service management for docker swarm mode.
 
 ## Compose File
 Orcinus compose compatible with docker compose format.
