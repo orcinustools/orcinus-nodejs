@@ -27,14 +27,18 @@
   },
   "homepage": "https://github.com/anak10thn/orcinus#readme",
   "dependencies": {
-    "commander": "^2.9.0"
+    "commander": "^2.9.0",
+    "yamljs": "^0.2.8"
   },
   "nexe": {
     "input": "cli.js",
     "output": "orcinus",
     "temp": "build/",
     "debug": false,
-    "nodeMakeArgs": ["-j", "8"],
+    "nodeMakeArgs": [
+      "-j",
+      "8"
+    ],
     "runtime": {
       "framework": "node",
       "version": "5.10.0",
