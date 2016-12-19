@@ -8,7 +8,7 @@ $ npm install orcinus -g
 ```
 ### Standalone binary
 ```bash
-$ curl -L https://github.com/anak10thn/orcinus/releases/download/v0.1/orcinus-linux-x86_64.bin -o /usr/local/bin/orcinus
+$ curl -L https://github.com/anak10thn/orcinus/releases/download/v0.1-alpha2/orcinus-linux-x86_64.bin -o /usr/local/bin/orcinus
 $ chmod +x /usr/local/bin/orcinus
 ```
 
