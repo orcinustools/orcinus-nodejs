@@ -1,5 +1,16 @@
 # Orcinus
-Service management for docker swarm mode.
+Container orchestration management tools for docker swarm mode.
+
+## Install
+### NPM
+```bash
+$ npm install orcinus -g
+```
+### Standalone binary
+```bash
+$ curl -L https://github.com/anak10thn/orcinus/releases/download/v0.1/orcinus-linux-x86_64.bin -o /usr/local/bin/orcinus
+$ chmod +x /usr/local/bin/orcinus
+```
 
 ## Compose File
 Orcinus compose compatible with docker compose format.
@@ -8,8 +19,8 @@ app.yml :
 ```yaml
 version: '2'
 services:
-  app1:
-    image: "aksaramaya/docker-http-server:v2"
+  web1:
+    image: "aksaramaya/docker-http-server:v1"
     ports:
     - "80:80"
     - "81:80"
@@ -17,6 +28,10 @@ services:
     - "AKU=false"
     - "KAMU=false"
     replicas: 4
+    cpu: "2"
+    memory: "512mb"
+  web2:
+    image: "nginx"
     cpu: "2"
     memory: "512mb"
 ```
