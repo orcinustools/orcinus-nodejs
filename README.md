@@ -25,19 +25,22 @@ services:
     - "80:80"
     - "81:80"
     environment:
-    - "AKU=false"
-    - "KAMU=false"
+    - "ENV_FOO=true"
+    - "ENV_BAR=false"
     replicas: 4
     cpu: "2"
     memory: "512mb"
+    network: "mynetwork"
   web2:
     image: "nginx"
     cpu: "2"
     memory: "512mb"
+    network: "mynetwork"
 ```
 
 ## Create Services
 ```bash
+$ docker network create --driver overlay mynetwork
 $ orcinus create app.yml
 Service web2 created
 2cct8xzckyfwkmhlfprxy8tj3
