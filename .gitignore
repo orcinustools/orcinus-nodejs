@@ -2,3 +2,4 @@ node_modules/
 build/
 orcinus
 test.yml
+npm-debug.log
