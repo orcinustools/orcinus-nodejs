@@ -5,6 +5,7 @@ var pkg = require('./package.json');
 var proc = require('process');
 var chp = require('child_process');
 var colors = require('colors');
+var fs = require('fs');
 var exec  = chp.exec;
 var spawn = chp.spawn;
 var data;
@@ -27,27 +28,21 @@ program
 .option('ls', 'List all service')
 .option('ps', 'List all process')
 .option('scale [service_name=num_scale]', 'scale service')
-.option('stop', 'Stop all service')
-.option('start', 'Start all service')
 .option('inspect', 'Inspect all service')
 .option('update', 'Update service')
 .action(function(file) {
   if(file){
     /*parsing file*/
     data = utils.parser(file);
-    /*option validation*/
-    cli = [];
-    prog = utils.obj(program);
-    program.options.forEach((v)=>{
-      if(prog.indexOf(v.flags) >= 0) cli.push(v.flags);
-    })
-    if(cli.length > 1){
-      console.log("More options.");
-      program.outputHelp(make_red);
-      process.exit(0);
-    }
+    validation();
   }
 }).parse(process.argv);
+
+if(!data){
+  var defaultManifest = "orcinus.yml";
+  if(fs.existsSync(defaultManifest)) data = utils.parser(defaultManifest);
+  validation();
+}
 
 
 if(program.create){
@@ -119,4 +114,17 @@ function err(){
   console.log('    $ orcinus [options] docker-compose-file.yml');
   console.log('');
   process.exit(0);
+}
+
+function validation(){
+  cli = [];
+  prog = utils.obj(program);
+  program.options.forEach((v)=>{
+    if(prog.indexOf(v.flags) >= 0) cli.push(v.flags);
+  })
+  if(cli.length > 1){
+    console.log("More options.");
+    program.outputHelp(make_red);
+    process.exit(0);
+  }
 }
