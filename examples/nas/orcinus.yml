@@ -1,0 +1,32 @@
+stack: "mystack"
+
+services:
+  webapp:
+    image: "aksaramaya/docker-http-server:v1"
+    volumes:
+    - "yournfs"
+  nginx:
+    image: "nginx:1.9"
+    ports:
+      - 443:443
+      - 80:80
+    volumes:
+    - "conf"
+    - "logs"
+
+volumes:
+  yournfs:
+    type: "nfs"
+    address: "192.168.7.11"
+    source: "/yournfs"
+    target: "/mnt"
+  conf:
+    type: "nfs"
+    address: "192.168.7.11"
+    source: "/yournfs/nginx/conf"
+    target: "/etc/nginx/conf.d"
+  logs:
+    type: "nfs"
+    address: "192.168.7.11"
+    source: "/yournfs/nginx/logs"
+    target: "/var/log/nginx"

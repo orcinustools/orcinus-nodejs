@@ -3,5 +3,4 @@ build/
 orcinus
 test.yml
 npm-debug.log
-orcinus.yml
 .DS_Store

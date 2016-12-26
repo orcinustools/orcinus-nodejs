@@ -1,0 +1,6 @@
+stack: "mystack"
+services:
+  webapp:
+    image: "aksaramaya/docker-http-server:v1"
+    ports:
+    - "80:80"
