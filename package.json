@@ -1,6 +1,6 @@
 {
   "name": "orcinus",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Docker Swarm Compose Tools",
   "main": "cli.js",
   "scripts": {
