@@ -1,0 +1,27 @@
+stack: "mariadb_cluster"
+
+services:
+  mariadb_master:
+    image: "hauptmedia/mariadb:10.1"
+    ports:
+    - "13306:3306"
+    environment:
+    - "MYSQL_ROOT_PASSWORD=test"
+    - "REPLICATION_PASSWORD=test"
+    - "MYSQL_USER=cluster"
+    - "MYSQL_PASSWORD=test"
+    - "GALERA=On"
+    - "NODE_NAME=mariadb_master"
+    - "CLUSTER_NAME=mariadb_cluster"
+    - "CLUSTER_ADDRESS=gcomm://"
+    command: "--wsrep-new-cluster"
+  mariadb_slave:
+    image: "hauptmedia/mariadb:10.1"
+    ports:
+    - "23306:3306"
+    environment:
+    - "REPLICATION_PASSWORD=tes"
+    - "GALERA=On"
+    - "NODE_NAME=mariadb_slave"
+    - "CLUSTER_NAME=mariadb_cluster"
+    - "CLUSTER_ADDRESS=gcomm://mariadb_master"
