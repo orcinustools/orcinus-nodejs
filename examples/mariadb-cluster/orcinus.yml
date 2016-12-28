@@ -20,7 +20,7 @@ services:
     ports:
     - "23306:3306"
     environment:
-    - "REPLICATION_PASSWORD=tes"
+    - "REPLICATION_PASSWORD=test"
     - "GALERA=On"
     - "NODE_NAME=mariadb_slave"
     - "CLUSTER_NAME=mariadb_cluster"
