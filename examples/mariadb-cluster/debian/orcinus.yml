@@ -2,7 +2,7 @@ stack: "mariadb_cluster"
 
 services:
   mariadb_master:
-    image: "hauptmedia/mariadb:10.1"
+    image: "aksaramaya/mariadb:10.1"
     ports:
     - "13306:3306"
     environment:

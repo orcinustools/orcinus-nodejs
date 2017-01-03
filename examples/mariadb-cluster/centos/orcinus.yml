@@ -1,0 +1,20 @@
+stack: "mariadb_cluster"
+
+services:
+  mariadb-master:
+    image: "aksaramaya/mariadb:10.1-centos"
+    ports:
+    - "13306:3306"
+    environment:
+    environment:
+    - "MYSQL_ROOT_PASSWORD=test123"
+    - "CLUSTER=BOOTSTRAP"
+    - "CLUSTER_NAME=your_cluster"
+  mariadb-slave:
+    image: "aksaramaya/mariadb:10.1-centos"
+    ports:
+    - "23306:3306"
+    environment:
+    - "MYSQL_ROOT_PASSWORD=test123"
+    - "CLUSTER=mariadb-master,mariadb_slave"
+    - "CLUSTER_NAME=your_cluster"
