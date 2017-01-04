@@ -38,6 +38,10 @@ program
   }
 }).parse(process.argv);
 
+if(utils.obj(program).length < 14){
+  err();
+}
+
 if(!data){
   var defaultManifest = "orcinus.yml";
   if(fs.existsSync(defaultManifest)) data = utils.parser(defaultManifest);
