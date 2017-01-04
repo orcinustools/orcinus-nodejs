@@ -25,7 +25,7 @@ program
 .version("orcinus version "+pkg.version)
 .option('create', 'Create service')
 .option('rm','remove', 'Remove all service')
-.option('ls [all|service_name]', 'List service')
+.option('ls [all|orcinus_file|service_name]', 'List service')
 .option('ps', 'List all process')
 .option('scale [service_name=num_scale]', 'scale service')
 .option('inspect', 'Inspect all service')
