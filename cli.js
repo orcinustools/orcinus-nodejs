@@ -19,33 +19,35 @@ var scale = require("./lib/scale");
 var ps = require("./lib/ps");
 var rm = require("./lib/rm");
 var inspect = require("./lib/inspect");
+var cluster = require("./lib/cluster");
 
 program
-.arguments('<file-config.yml>')
 .version("orcinus version "+pkg.version)
+.option('-f,--file <orcinus_file.yml>','Orcinus file')
 .option('create', 'Create service')
-.option('rm','remove', 'Remove all service')
+.option('rm','Remove all service')
 .option('ls [all|orcinus file|service name]', 'List service')
 .option('ps', 'List all process')
 .option('scale [service_name=num_scale]', 'scale service')
 .option('inspect', 'Inspect all service')
 .option('update', 'Update service')
-.action(function(file) {
-  if(file){
-    /*parsing file*/
-    data = utils.parser(file);
-    cliValidation();
-  }
-}).parse(process.argv);
+.option('cluster [option|help]', 'Manage Cluster',/^(init|join|leave|ls|token|promote|option|--help|-h)$/i)
+.parse(process.argv);
 
 if(utils.obj(program).length < 14){
   err();
 }
 
+if(program.file){
+  /*parsing file*/
+  data = utils.parser(program.file);
+  //cliValidation();
+}
+
 if(!data){
   var defaultManifest = "orcinus.yml";
   if(fs.existsSync(defaultManifest)) data = utils.parser(defaultManifest);
-  cliValidation();
+  //cliValidation();
 }
 
 if(program.create){
@@ -64,22 +66,23 @@ if(program.update){
 
 if(program.ls){
   if(typeof(program.ls) == "boolean"){
-    var defaultManifest = "orcinus.yml";
-    if(fs.existsSync(defaultManifest)){
-      var data = utils.parser(defaultManifest);
-      list.init(data);
+    if(!program.file){
+        var defaultManifest = "orcinus.yml";
+        if(fs.existsSync(defaultManifest)){
+          var data = utils.parser(defaultManifest);
+          list.init(data);
+        }
+        else{
+          err();
+        }
     }
     else{
-      err();
+      list.init(data);
     }
   }
   else{
     if(program.ls == "all"){
       list.all();
-    }
-    else if(fs.existsSync(program.ls)){
-      data = utils.parser(program.ls);
-      list.init(data);
     }
     else{
       ps.prs(program.ls);
@@ -123,8 +126,18 @@ if(program.scale){
   }
 }
 
+if(program.cluster){
+  var args = program.args;
+  var cli = program.cluster;
+  cluster.start(cli,args);
+}
+
 function make_red(txt) {
   return colors.red(txt);
+}
+
+function make_yellow(txt) {
+  return colors.yellow(txt);
 }
 
 function err(){
@@ -143,7 +156,7 @@ function cliValidation(){
   program.options.forEach((v)=>{
     if(prog.indexOf(v.flags) >= 0) cli.push(v.flags);
   })
-  if(cli.length > 1){
+  if(cli.length > 2){
     console.log("More options.");
     program.outputHelp(make_red);
     process.exit(0);

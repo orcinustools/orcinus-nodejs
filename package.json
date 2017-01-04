@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/anak10thn/orcinus#readme",
   "dependencies": {
+    "base-64": "^0.1.0",
     "colors": "^1.1.2",
     "commander": "^2.9.0",
     "yamljs": "^0.2.8"
