@@ -25,7 +25,7 @@ program
 .version("orcinus version "+pkg.version)
 .option('create', 'Create service')
 .option('rm','remove', 'Remove all service')
-.option('ls', 'List all service')
+.option('ls [all|service_name]', 'List service')
 .option('ps', 'List all process')
 .option('scale [service_name=num_scale]', 'scale service')
 .option('inspect', 'Inspect all service')
@@ -34,16 +34,15 @@ program
   if(file){
     /*parsing file*/
     data = utils.parser(file);
-    validation();
+    cliValidation();
   }
 }).parse(process.argv);
 
 if(!data){
   var defaultManifest = "orcinus.yml";
   if(fs.existsSync(defaultManifest)) data = utils.parser(defaultManifest);
-  validation();
+  cliValidation();
 }
-
 
 if(program.create){
   if(!data){
@@ -60,10 +59,28 @@ if(program.update){
 }
 
 if(program.ls){
-  if(!data){
-    err()
+  if(typeof(program.ls) == "boolean"){
+    var defaultManifest = "orcinus.yml";
+    if(fs.existsSync(defaultManifest)){
+      var data = utils.parser(defaultManifest);
+      list.init(data);
+    }
+    else{
+      err();
+    }
   }
-  list.init(data);
+  else{
+    if(program.ls == "all"){
+      list.all();
+    }
+    else if(fs.existsSync(program.ls)){
+      data = utils.parser(program.ls);
+      list.init(data);
+    }
+    else{
+      ps.prs(program.ls);
+    }
+  }
 }
 
 if(program.ps){
@@ -116,7 +133,7 @@ function err(){
   process.exit(0);
 }
 
-function validation(){
+function cliValidation(){
   cli = [];
   prog = utils.obj(program);
   program.options.forEach((v)=>{
