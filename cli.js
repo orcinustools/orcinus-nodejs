@@ -31,7 +31,7 @@ program
 .option('scale [service_name=num_scale]', 'scale service')
 .option('inspect', 'Inspect all service')
 .option('update', 'Update service')
-.option('cluster [option|help]', 'Manage Cluster',/^(init|join|leave|ls|token|promote|option|--help|-h)$/i)
+.option('cluster [option|help]', 'Manage Cluster',/^(init|join|leave|leave-manager|ls|token|promote|inspect|option|--help|-h)$/i)
 .parse(process.argv);
 
 if(utils.obj(program).length < 14){
