@@ -13,13 +13,13 @@ Container orchestration management tools for docker swarm mode.
 #### Use NPM
 
 ```bash
-$ npm install orcinus -g
+npm install orcinus -g
 ```
 #### Standalone binary
 
 ```bash
-$ curl -L http://dl.aksaramaya.id/orcinus/stable/orcinus-linux-x86_64.bin -o /usr/bin/orcinus
-$ chmod +x /usr/bin/orcinus
+curl -L http://dl.aksaramaya.id/orcinus/stable/orcinus-linux-x86_64.bin -o /usr/bin/orcinus
+chmod +x /usr/bin/orcinus
 ```
 
 ## Cluster Setup
@@ -126,3 +126,6 @@ Service web1 created
 # remove service
 root@192.168.7.11 test]$ orcinus rm
 ```
+
+# Documentation
+* [Wiki](https://github.com/orcinustools/orcinus/wiki)
