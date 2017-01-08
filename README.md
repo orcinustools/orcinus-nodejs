@@ -18,7 +18,7 @@ $ npm install orcinus -g
 #### Standalone binary
 
 ```bash
-$ curl -L https://dl.aksaramaya.id/orcinus/stable/orcinus-linux-x86_64.bin -o /usr/bin/orcinus
+$ curl -L http://dl.aksaramaya.id/orcinus/stable/orcinus-linux-x86_64.bin -o /usr/bin/orcinus
 $ chmod +x /usr/bin/orcinus
 ```
 
@@ -90,7 +90,8 @@ Plugins:
 Engine Version:		1.12.3
 ```
 
-### Deploy your first service
+### Deploy Services
+Deploy your first service.
 ```bash
 # orcinus compose
 [root@192.168.7.11 ~]$ mkdir test/
