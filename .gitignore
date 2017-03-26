@@ -5,3 +5,4 @@ test.yml
 npm-debug.log
 .DS_Store
 test/test.json
+coverage
