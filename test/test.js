@@ -1,7 +1,12 @@
 var should = require('should');
-var orcinusCreate = require('../lib/create');
 var chp = require('child_process');
 var fs = require('fs');
+var orcinusCreate = require('../lib/create');
+
+// TODO fix me
+// Check for docker binary and `nginx` image before running unit testing
+// var orcinusRemove = require('../lib/rm');
+// var orcinusPs = require('../lib/ps');
 
 
 describe('Orcinus', function() {
