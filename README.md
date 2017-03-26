@@ -127,5 +127,11 @@ Service web1 created
 root@192.168.7.11 test]$ orcinus rm
 ```
 
+#### Test
+
+```
+$ npm run test
+```
+
 # Documentation
 * [Wiki](https://github.com/orcinustools/orcinus/wiki)
