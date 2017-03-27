@@ -5,7 +5,9 @@ var orcinusCreate = require('../lib/create');
 var orcinusRemove = require('../lib/rm');
 
 // TODO fix me
-// Check for docker binary and `nginx` image before running unit testing
+// Check for docker binary and `nginx` image before running unit testing.
+// Make sure there is no container running inside docker
+// 
 // var orcinusPs = require('../lib/ps');
 
 
@@ -25,7 +27,7 @@ describe('Orcinus', function() {
 			}
 			orcinusCreate.init(data);
 			setTimeout(() => { // wait for docker
-				let cmd = 'docker ps -f name=web1 -q';
+				let cmd = 'docker ps | sed -n 2,1p | grep web | cut -d\' \' -f 1';
 			  chp.exec(cmd, (err, stdout, stderr) => {
 					stdout.length.should.greaterThan(10); // Container ID length was 12
 					orcinusRemove.init(data);
@@ -48,7 +50,7 @@ describe('Orcinus', function() {
 			fs.writeFileSync('./test/test.json', JSON.stringify(data));
 			chp.exec('cd ' + process.cwd() + ' && node cli.js test/test.json', () => {
 			  setTimeout(() => { // wait for docker
-			  	let cmd = 'docker ps -f name=web1 -q';
+					let cmd = 'docker ps | sed -n 2,1p | grep web | cut -d\' \' -f 1';
 			    chp.exec(cmd, (err, stdout, stderr) => {
 			  		stdout.length.should.greaterThan(10); // Container ID length was 12
 			  		chp.exec('cd ' + process.cwd() + ' && node cli.js rm -f test/test.json');
