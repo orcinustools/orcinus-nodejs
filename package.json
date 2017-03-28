@@ -7,7 +7,8 @@
     "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test/*"
   },
   "bin": {
-    "orcinus": "./cli.js"
+    "orcinus": "./cli.js",
+    "orcinus-dashboard": "./server.js"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "base-64": "^0.1.0",
     "colors": "^1.1.2",
     "commander": "^2.9.0",
+    "express": "^4.15.2",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "should": "^11.2.1",
