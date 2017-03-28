@@ -7,28 +7,28 @@ SRC := $(PWD)
 all: build
 
 prebuild:
-			@npm install -g nexe
+			npm install -g nexe
 
 frontend:
-			if [ ! -d "dashboard" ]; then @git clone https://github.com/orcinustools/dashboard.git; fi
-			@cd dashboard;npm install;npm run build:prod;cd $(SRC)
-			@mv ./dashboard/dist www
-			@rm -rf dashboard
+			if [ ! -d "dashboard" ]; then git clone https://github.com/orcinustools/dashboard.git; fi
+			cd dashboard;npm install;npm run build:prod;cd $(SRC)
+			mv ./dashboard/dist www
+			rm -rf dashboard
 
 build: frontend
-			@npm install
-			@nexe
+			npm install
+			nexe
 
 install:
-			@cp -rf orcinus $(PREFIX)
+			cp -rf orcinus $(PREFIX)
 
 clean:
-			@rm -rf build orcinus
+			rm -rf build orcinus
 
 orcinusd:
-			@systemctl stop docker
-			@systemctl disable docker
-			@cp $(CONFIG_DIRS)/orcinusd.service /lib/systemd/system
-			@chmod 644 /lib/systemd/system/orcinusd.service
-			@systemctl enable orcinusd
-			@systemctl start orcinusd
+			systemctl stop docker
+			systemctl disable docker
+			cp $(CONFIG_DIRS)/orcinusd.service /lib/systemd/system
+			chmod 644 /lib/systemd/system/orcinusd.service
+			systemctl enable orcinusd
+			systemctl start orcinusd
