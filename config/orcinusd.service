@@ -1,0 +1,14 @@
+[Unit]
+Description=Orcinus Daemon
+After=syslog.target network.target
+
+[Service]
+PIDFile=/var/run/orcinusd.pid
+ExecStart=/usr/bin/docker daemon -H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=orcinusd
+
+[Install]
+WantedBy=multi-user.target
