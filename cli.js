@@ -2,7 +2,7 @@
 
 var program = require('commander');
 var pkg = require('./package.json');
-var proc = require('process');
+var process = require('process');
 var chp = require('child_process');
 var colors = require('colors');
 var fs = require('fs');
@@ -44,13 +44,30 @@ if(utils.obj(program).length < 14){
 
 if(program.file){
   /*parsing file*/
+  if (program.file[0] != '/' && program.file[0] != '~') { // If not an absolute path
+    program.file = process.cwd() + ((process.platform == 'win32')?'\\':'/') + program.file;
+  }
+  if (!fs.existsSync(program.file)) {
+    console.log('File doesn\'t exist');
+    return err();
+  }
+
   data = utils.parser(program.file);
   //cliValidation();
 }
 
 if(!data){
-  var defaultManifest = "orcinus.yml";
-  if(fs.existsSync(defaultManifest)) data = utils.parser(defaultManifest);
+  var defaultManifest = "orcinus";
+  // Favor yaml over json
+  if (fs.existsSync(defaultManifest + '.yml')) {
+    defaultManifest += '.yml';
+  } else if (fs.existsSync(defaultManifest + '.json')) {
+    defaultManifest += '.json';
+  } else {
+    console.log('Default manifest file doesn\'t exist. Expected a *.yml or *.json file.');
+    return err();
+  }
+  data = utils.parser(process.cwd() + ((process.platform == 'win32')?'\\':'/') + defaultManifest);
   //cliValidation();
 }
 
