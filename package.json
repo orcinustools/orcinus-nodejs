@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "orcinus": "./cli.js"
+    "orcinus": "./cli.js",
+    "orcinus-dashboard": "./server.js"
   },
   "repository": {
     "type": "git",

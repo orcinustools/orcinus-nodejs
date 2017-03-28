@@ -8,7 +8,7 @@ var colors = require('colors');
 var fs = require('fs');
 var exec  = chp.exec;
 var spawn = chp.spawn;
-var data;
+var data,port;
 
 /*module exports*/
 var utils = require("./lib/utils");
@@ -21,6 +21,9 @@ var rm = require("./lib/rm");
 var inspect = require("./lib/inspect");
 var cluster = require("./lib/cluster");
 
+/*module dashboard*/
+var web = require("./server");
+
 program
 .version("orcinus version "+pkg.version)
 .option('-f,--file <orcinus_file.yml>','Orcinus file')
@@ -31,6 +34,7 @@ program
 .option('scale [service_name=num_scale]', 'scale service')
 .option('inspect', 'Inspect all service')
 .option('update', 'Update service')
+.option('dashboard', 'Start dashboard <hostname:port>')
 .option('cluster [option|help]', 'Manage Cluster',/^(init|join|leave|leave-manager|ls|token|promote|inspect|option|--help|-h)$/i)
 .parse(process.argv);
 
@@ -130,6 +134,19 @@ if(program.cluster){
   var args = program.args;
   var cli = program.cluster;
   cluster.start(cli,args);
+}
+
+if(program.dashboard){
+  if(program.args.length > 0){
+    var environtment = program.args[0].split(":");
+    process.env['ORCINUS_HOST'] = environtment[0];
+    process.env['ORCINUS_PORT'] = environtment[1];
+  }
+  else{
+    process.env['ORCINUS_HOST'] = "127.0.0.1";
+    process.env['ORCINUS_PORT'] = "4000";
+  }
+  web();
 }
 
 function make_red(txt) {
