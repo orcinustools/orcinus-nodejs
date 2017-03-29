@@ -1,7 +1,6 @@
 node_modules/
 build/
 dashboard/
-www/
 orcinus
 test.yml
 npm-debug.log

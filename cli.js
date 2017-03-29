@@ -56,19 +56,21 @@ if(program.file){
   //cliValidation();
 }
 
-if(!data){
-  var defaultManifest = "orcinus";
-  // Favor yaml over json
-  if (fs.existsSync(defaultManifest + '.yml')) {
-    defaultManifest += '.yml';
-  } else if (fs.existsSync(defaultManifest + '.json')) {
-    defaultManifest += '.json';
-  } else {
-    console.log('Default manifest file doesn\'t exist. Expected a *.yml or *.json file.');
-    return err();
+if(!program.dashboard){
+  if(!data){
+    var defaultManifest = "orcinus";
+    // Favor yaml over json
+    if (fs.existsSync(defaultManifest + '.yml')) {
+      defaultManifest += '.yml';
+    } else if (fs.existsSync(defaultManifest + '.json')) {
+      defaultManifest += '.json';
+    } else {
+      console.log('Default manifest file doesn\'t exist. Expected a *.yml or *.json file.');
+      return err();
+    }
+    data = utils.parser(process.cwd() + ((process.platform == 'win32')?'\\':'/') + defaultManifest);
+    //cliValidation();
   }
-  data = utils.parser(process.cwd() + ((process.platform == 'win32')?'\\':'/') + defaultManifest);
-  //cliValidation();
 }
 
 if(program.create){

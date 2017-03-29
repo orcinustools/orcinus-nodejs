@@ -7,8 +7,7 @@
     "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test/*"
   },
   "bin": {
-    "orcinus": "./cli.js",
-    "orcinus-dashboard": "./server.js"
+    "orcinus": "./cli.js"
   },
   "repository": {
     "type": "git",
@@ -29,13 +28,21 @@
   "homepage": "https://github.com/anak10thn/orcinus#readme",
   "dependencies": {
     "base-64": "^0.1.0",
+    "body-parser": "~1.15.1",
     "colors": "^1.1.2",
     "commander": "^2.9.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
     "express": "^4.15.2",
-    "istanbul": "^0.4.5",
-    "mocha": "^3.2.0",
-    "should": "^11.2.1",
     "file-extension": "^3.1.2",
+    "http-proxy": "^1.16.2",
+    "istanbul": "^0.4.5",
+    "jade": "~1.11.0",
+    "mocha": "^3.2.0",
+    "morgan": "~1.7.0",
+    "path": "^0.12.7",
+    "serve-favicon": "~2.3.0",
+    "should": "^11.2.1",
     "utf8": "^2.1.2",
     "yamljs": "^0.2.8"
   },
