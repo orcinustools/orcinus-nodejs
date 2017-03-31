@@ -7,7 +7,7 @@ var chp = require('child_process');
 var fs = require('fs');
 var orcinusCreate = require('../lib/create');
 var orcinusRemove = require('../lib/rm');
-const timeout = 20000;
+const timeout = 26000;
 
 // TODO fix me
 // Check for docker binary and `nginx` image before running unit testing.
@@ -75,7 +75,7 @@ describe('Orcinus', function() {
 			  		chp.exec('cd ' + process.cwd() + ' && node cli.js rm -f test/test.json');
 			    	done();
 			    });
-			  }, 10000);
+			  }, 15000);
 			});
     });
     it('should be fail to initialize cluster with no service', function(done) {
