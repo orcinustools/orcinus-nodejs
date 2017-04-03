@@ -13,15 +13,15 @@ var cmds = [
 ];
 
 if (mode === 'post') {
-	cmds.splice(2,1);
+  cmds.splice(2,1);
 }
 
 async.eachSeries(cmds, (cmd, cb) => {
-	chp.exec(cmd, (err, stdout, stderr) => {
-		cb();
-	});
+  chp.exec(cmd, (err, stdout, stderr) => {
+    cb();
+  });
 }, () => {
-	if (mode === 'pre') {
-  	console.log('Ready to test');
-	}
+  if (mode === 'pre') {
+    console.log('Ready to test');
+  }
 });
