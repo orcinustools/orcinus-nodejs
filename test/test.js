@@ -11,7 +11,7 @@ const timeout = 120000;
 const deployTimeout = 40000
 
 // TODO fix me
-// Check for docker binary and `nginx` image before running unit testing.
+// Check for docker binary and aksaramaya's docker image before running unit testing.
 // Make sure there is no container running inside docker
 // 
 // var orcinusPs = require('../lib/ps');
@@ -103,7 +103,7 @@ describe('Orcinus', function() {
         "stack" : 123,
         "services": {
           "orcinus-ut-web": {
-            "image": "nginx",
+            "image": "aksaramaya/docker-http-server:v1",
             "cpu": "1",
             "memory": "128mb"
           }
