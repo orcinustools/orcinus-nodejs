@@ -10,9 +10,10 @@ prebuild:
 			npm install -g nexe
 
 frontend:
-			rm -rf wwww
+			rm -rf www
 			if [ ! -d "dashboard" ]; then git clone https://github.com/orcinustools/dashboard.git;cd dashboard;npm install;npm run build:prod;cd $(SRC); else cd dashboard;npm install;npm run build:prod;cd $(SRC); fi
 			mv ./dashboard/dist www
+			rm -rf dashboard
 
 build: frontend
 			npm install
