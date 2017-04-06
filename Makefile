@@ -2,7 +2,7 @@ PREFIX := /usr/local/bin
 CONFIG_DIRS := config
 SRC := $(PWD)
 
-.PHONY: all clean build frontend install prebuild orcinusd docker push
+.PHONY: all clean build frontend install prebuild orcinusd docker push run
 
 all: build
 
@@ -11,10 +11,8 @@ prebuild:
 
 frontend:
 			rm -rf wwww
-			if [ ! -d "dashboard" ]; then git clone https://github.com/orcinustools/dashboard.git; fi
-			cd dashboard;npm install;npm run build:prod;cd $(SRC)
+			if [ ! -d "dashboard" ]; then git clone https://github.com/orcinustools/dashboard.git;cd dashboard;npm install;npm run build:prod;cd $(SRC); else cd dashboard;npm install;npm run build:prod;cd $(SRC); fi
 			mv ./dashboard/dist www
-			rm -rf dashboard
 
 build: frontend
 			npm install
@@ -39,3 +37,7 @@ docker:
 
 push:
 			docker push orcinus/orcinus:latest
+
+run:
+			echo "Dashboard starting.........."
+			node cli.js dashboard
