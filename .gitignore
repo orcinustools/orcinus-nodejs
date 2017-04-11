@@ -7,4 +7,7 @@ npm-debug.log
 .DS_Store
 test/test.json
 coverage
+lib/coverage.json
+lib/lcov-report/
+lib/lcov.info
 config.js
