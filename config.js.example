@@ -1,3 +1,7 @@
 module.exports = {
-    
+    mongo: {
+        url: "",
+        db: ""
+    },
+    prefix: ""
 }

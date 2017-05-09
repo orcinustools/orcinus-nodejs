@@ -24,7 +24,7 @@ module.exports = function(){
   });
 
   app.use('/apis/ping', ping);
-   app.use('/apis/info', info);
+  app.use('/apis/info', info);
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
     var err = new Error('Not Found');
