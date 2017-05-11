@@ -14,6 +14,7 @@ module.exports = function(){
   var ping = require("./apis/ping");
   var info = require("./apis/info");
   var cluster = require("./apis/cluster");
+  var service = require("./apis/service");
 
   app.use(logger('dev'));
   app.use(bodyParser.json());
@@ -31,6 +32,7 @@ module.exports = function(){
   app.use('/apis/ping', ping);
   app.use('/apis/info', info);
   app.use('/apis/cluster', cluster);
+  app.use('/apis/service', service);
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
     var err = new Error('Not Found');

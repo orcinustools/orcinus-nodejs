@@ -396,6 +396,7 @@ orcinus.prototype.listImages = function(opts, callback) {
   }
 };
 
+
 orcinus.prototype.listServices = function(opts, callback) {
   var self = this;
   var args = util.processArgs(opts, callback);
@@ -406,7 +407,8 @@ orcinus.prototype.listServices = function(opts, callback) {
     options: args.opts,
     statusCodes: {
       200: true,
-      500: 'server error'
+      500: 'server error',
+      503: 'node is not part of a Orcinus'
     }
   };
 

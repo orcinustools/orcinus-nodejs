@@ -26,7 +26,8 @@ Service.prototype.inspect = function(callback) {
     statusCodes: {
       200: true,
       404: 'no such service',
-      500: 'server error'
+      500: 'server error',
+      503: 'node is not part of a orcinus'
     }
   };
 
