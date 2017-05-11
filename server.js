@@ -6,16 +6,21 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var orcinusd = require('./orcinusd/orcinusd');
 
 module.exports = function(){
+  
   var PORT 	= process.env.ORCINUS_PORT || 4000;
   var ping = require("./apis/ping");
   var info = require("./apis/info");
+  var cluster = require("./apis/cluster");
 
   app.use(logger('dev'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(cookieParser());
+
+  app.locals.orcinus = new orcinusd({socketPath: '/var/run/docker.sock'});
 
   app.use(express.static(path.join(__dirname, './www')));
 
@@ -25,6 +30,7 @@ module.exports = function(){
 
   app.use('/apis/ping', ping);
   app.use('/apis/info', info);
+  app.use('/apis/cluster', cluster);
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
     var err = new Error('Not Found');
