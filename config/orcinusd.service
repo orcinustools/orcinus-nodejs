@@ -4,7 +4,7 @@ After=syslog.target network.target
 
 [Service]
 PIDFile=/var/run/orcinusd.pid
-ExecStart=/usr/bin/dockerd daemon -H tcp://127.0.0.1:6969 -H unix:///var/run/docker.sock
+ExecStart=/usr/bin/dockerd -H tcp://127.0.0.1:6969 -H unix:///var/run/docker.sock
 Restart=always
 StandardOutput=syslog
 StandardError=syslog
