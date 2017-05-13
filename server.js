@@ -43,7 +43,7 @@ module.exports = function(){
   app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
-    res.sendFile(path.resolve(__dirname, './www', 'index.html'));
+    res.sendFile(path.join(__dirname, './www', 'index.html'));
   });
 
   app.listen(PORT, function(error) {
