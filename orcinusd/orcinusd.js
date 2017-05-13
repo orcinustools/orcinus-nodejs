@@ -1215,6 +1215,39 @@ orcinus.prototype.runPromise = function(image, cmd, streamo, createOptions, star
   });
 };
 
+/* Stacks */
+
+orcinus.prototype.listStacks = function(callback) {
+  var self = this;
+  var args = util.processArgs({filters:{driver:{overlay:true}}}, callback);
+
+  var optsf = {
+    path: '/networks?',
+    method: 'GET',
+    options: args.opts,
+    statusCodes: {
+      200: true,
+      400: 'bad parameter',
+      500: 'server error'
+    }
+  };
+
+  if (args.callback === undefined) {
+    return new this.modem.Promise(function(resolve, reject) {
+      self.modem.dial(optsf, function(err, data) {
+        if (err) {
+          return reject(err);
+        }
+        resolve(data);
+      });
+    });
+  } else {
+    this.modem.dial(optsf, function(err, data) {
+      args.callback(err, data);
+    });
+  }
+};
+
 /* Cluster management */
 
 orcinus.prototype.cluster = function(callback) {

@@ -15,6 +15,9 @@ module.exports = function(){
   var info = require("./apis/info");
   var cluster = require("./apis/cluster");
   var service = require("./apis/service");
+  var stack = require("./apis/stack");
+  var task = require("./apis/task");
+  var volume = require("./apis/volume");
 
   app.use(logger('dev'));
   app.use(bodyParser.json());
@@ -33,6 +36,9 @@ module.exports = function(){
   app.use('/apis/info', info);
   app.use('/apis/cluster', cluster);
   app.use('/apis/service', service);
+  app.use('/apis/stack', stack);
+  app.use('/apis/task', task);
+  app.use('/apis/volume', volume);
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
     var err = new Error('Not Found');
