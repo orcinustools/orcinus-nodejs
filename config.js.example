@@ -3,5 +3,8 @@ module.exports = {
         url: "",
         db: ""
     },
-    prefix: ""
+    prefix: "",
+    http: {
+    	cors: "*"
+    }
 }

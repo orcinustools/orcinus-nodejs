@@ -7,6 +7,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var orcinusd = require('orcinusd');
+var config = require('./config.js');
 
 module.exports = function(){
   
@@ -18,6 +19,14 @@ module.exports = function(){
   var stack = require("./apis/stack");
   var task = require("./apis/task");
   var volume = require("./apis/volume");
+
+  if(config.http.cors){
+    app.use(function(req, res, next) {
+      res.header("Access-Control-Allow-Origin", config.http.cors);
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+      next();
+    });
+  }
 
   app.use(logger('dev'));
   app.use(bodyParser.json());
