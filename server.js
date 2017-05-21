@@ -6,7 +6,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var orcinusd = require('./orcinusd/orcinusd');
+var orcinusd = require('orcinusd');
 
 module.exports = function(){
   
