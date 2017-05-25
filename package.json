@@ -29,6 +29,7 @@
   "dependencies": {
     "base-64": "^0.1.0",
     "body-parser": "~1.15.1",
+    "bytes": "^2.5.0",
     "colors": "^1.1.2",
     "commander": "^2.9.0",
     "cookie-parser": "~1.4.3",
@@ -40,7 +41,7 @@
     "jade": "~1.11.0",
     "mocha": "^3.2.0",
     "morgan": "~1.7.0",
-    "orcinusd": "^0.3.1",
+    "orcinusd": "^0.3.2",
     "path": "^0.12.7",
     "serve-favicon": "~2.3.0",
     "should": "^11.2.1",

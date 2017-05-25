@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var parser = require('../lib/parser.js');
 
 router.get("/",function(req, res, next){
     req.app.locals.orcinus.listServices(function (err, data) {
@@ -13,15 +14,23 @@ router.get("/",function(req, res, next){
 });
 
 router.post("/create",function(req, res, next){
-    var opt  = req.body.opt;
-    var auth = req.body.auth;
-    req.app.locals.orcinus.createService(auth,opt,function (err, data) {
-        if(err){
-            res.status(err.statusCode).send({error : err.reason});
-        }
-        else{
-            res.send(data);
-        }
+    var parse  = new parser(req.body.opt);
+    var opt = parse.services();
+    console.log(JSON.stringify(opt));
+
+    if(req.body.auth){
+        var auth = {"authconfig" : req.body.auth};
+    }
+
+    opt.forEach(function(ops){
+        req.app.locals.orcinus.createService(auth,ops,function (err, data) {
+            if(err){
+                res.status(err.statusCode).send({error : err.reason});
+            }
+            else{
+                res.send(data);
+            }
+        });
     });
 });
 

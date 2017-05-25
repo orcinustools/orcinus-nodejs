@@ -59,7 +59,7 @@ module.exports = function(){
     if (error) {
       console.error(error);
     } else {
-      console.info("==> 🌎  Listening on port %s. Visit http://%s:%s/ in your browser.", PORT,process.env.ORCINUS_HOST, PORT);
+      console.info("==> 🌎 Listening on port %s. Visit http://%s:%s/ in your browser.", PORT,process.env.ORCINUS_HOST, PORT);
     }
   });
   return app;

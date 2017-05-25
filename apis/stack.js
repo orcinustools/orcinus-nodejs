@@ -1,9 +1,29 @@
 var express = require('express');
 var router = express.Router();
 
-router.get("/",function(req, res, next){
-    req.app.locals.orcinus.listStacks(function (err, data) {
+router.post("/",function(req, res, next){
+	var name = req.body.name;
+    req.app.locals.orcinus.listStacks(name,function (err, data) {
         if(err){
+            res.status(err.statusCode).send({error : err.reason});
+        }
+        else{
+        	data = data.find(function(lst){return lst.Name == name});
+            if(data){
+                data.created = true;
+                res.send(data);
+            }
+            else{
+                res.send({created : false});
+            }
+        }
+    });
+});
+
+router.post("/create",function(req, res, next){
+    req.app.locals.orcinus.createStack(req.body.name,function (err, data) {
+        if(err){
+            console.log(err);
             res.status(err.statusCode).send({error : err.reason});
         }
         else{
