@@ -25,6 +25,7 @@ router.post("/create",function(req, res, next){
     opt.forEach(function(ops){
         req.app.locals.orcinus.createService(auth,ops,function (err, data) {
             if(err){
+                console.log(err);
                 res.status(err.statusCode).send({error : err.reason});
             }
             else{
