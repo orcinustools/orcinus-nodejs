@@ -8,7 +8,9 @@ router.post("/",function(req, res, next){
             res.status(err.statusCode).send({error : err.reason});
         }
         else{
-        	data = data.find(function(lst){return lst.Name == name});
+            if(name){
+                data = data.find(function(lst){return lst.Name == name});
+            }
             if(data){
                 data.created = true;
                 res.send(data);
