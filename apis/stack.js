@@ -23,6 +23,7 @@ router.post("/",function(req, res, next){
 });
 
 router.post("/create",function(req, res, next){
+    console.log("Create Stack : "+req.body.name);
     req.app.locals.orcinus.createStack(req.body.name,function (err, data) {
         if(err){
             console.log(err);
