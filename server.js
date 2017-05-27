@@ -7,10 +7,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var orcinusd = require('orcinusd');
-var config = require('./config.js');
+if (!global.test) var defaultConfig = require('./config.js');
 
-module.exports = function(){
-  
+module.exports = function(opts){
+  config = opts || defaultConfig
   var PORT 	= process.env.ORCINUS_PORT || 4000;
   var ping = require("./apis/ping");
   var info = require("./apis/info");
