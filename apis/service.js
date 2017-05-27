@@ -83,4 +83,18 @@ router.post("/update",function(req, res, next){
     });
 });
 
+router.post("/task",function(req, res, next){
+    var filters = {filters:{service:{}}};
+    var idSVC = req.body.service;
+    filters.filters.service[idSVC] = true;
+    req.app.locals.orcinus.listTasks(filters,function (err, data) {
+        if(err){
+            res.status(err.statusCode).send({error : err.reason});
+        }
+        else{
+            res.send(data);
+        }
+    });
+});
+
 module.exports = router;
