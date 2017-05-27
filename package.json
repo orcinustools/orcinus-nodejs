@@ -4,7 +4,8 @@
   "description": "Container orchestration tools",
   "main": "cli.js",
   "scripts": {
-    "test": "node test/pre-post.js pre && sleep 5 && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test/test.js && node test/pre-post.js post"
+    "test": "node test/pre-post.js pre && sleep 5 && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test/test.js && node test/pre-post.js post",
+    "dashboard-test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test/dashboard.js"
   },
   "bin": {
     "orcinus": "./cli.js"
@@ -51,6 +52,7 @@
     "path": "^0.12.7",
     "serve-favicon": "~2.3.0",
     "should": "^11.2.1",
+    "supertest": "^3.0.0",
     "utf8": "^2.1.2",
     "yamljs": "^0.2.8"
   },
