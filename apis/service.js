@@ -21,15 +21,25 @@ router.post("/create",function(req, res, next){
     if(req.body.auth){
         var auth = {"authconfig" : req.body.auth};
     }
-
-    opt.forEach(function(ops){
+    var responseData = [];
+    opt.forEach(function(ops,index){
         req.app.locals.orcinus.createService(auth,ops,function (err, data) {
             if(err){
-                console.log(err);
-                res.status(err.statusCode).send({error : err.reason});
+                var error = {};
+                error.error = true;
+                error.app = ops.Name;
+                error.status = err.statusCode;
+                error.reason = err.reason;
+                responseData.push(error);
             }
             else{
-                res.send(data);
+                data.error = false;
+                data.app = ops.Name;
+                responseData.push(data);
+            }
+
+            if((opt.length - 1) == index){
+                res.send(responseData);
             }
         });
     });

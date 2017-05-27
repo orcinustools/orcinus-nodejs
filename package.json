@@ -41,7 +41,7 @@
     "jade": "~1.11.0",
     "mocha": "^3.2.0",
     "morgan": "~1.7.0",
-    "orcinusd": "^0.3.2",
+    "orcinusd": "^0.3.3",
     "path": "^0.12.7",
     "serve-favicon": "~2.3.0",
     "should": "^11.2.1",

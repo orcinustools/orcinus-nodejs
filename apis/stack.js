@@ -35,4 +35,34 @@ router.post("/create",function(req, res, next){
     });
 });
 
+router.post("/list-services",function(req, res, next){
+    var stackID = req.body.id;
+
+    req.app.locals.orcinus.listServices(function (err, data) {
+        if(err){
+            res.status(err.statusCode).send({error : err.reason});
+        }
+        else{
+            if(data.length > 0){
+                var obj = data.filter(function ( obj ) {
+                    var chk = obj.Spec.Networks.filter(function(objFil){
+                    return objFil.Target === stackID;
+                    });
+                    if(chk.length == 0){
+                        chk = false;
+                    }
+                    else{
+                        chk = true;
+                    }
+                    return chk;
+                });
+                res.send(obj);
+            }
+            else{
+                res.send(data);
+            }
+        }
+    });
+});
+
 module.exports = router;
