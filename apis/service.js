@@ -70,17 +70,29 @@ router.post("/delete",function(req, res, next){
 });
 
 router.post("/update",function(req, res, next){
-    var opt  = req.body.opt;
-    var auth = req.body.auth;
-    var svc = req.app.locals.orcinus.getService(req.body.id);
-    svc.update(auth,opt,function (err, data) {
+    var spec = new parser(req.body).update();
+    var svc = req.app.locals.orcinus.getService(spec.Name);
+    if(req.body.auth){
+        var auth = {"authconfig" : req.body.auth};
+    }
+
+    console.log(JSON.stringify(spec));
+    svc.update(auth,spec,function (err, data) {
         if(err){
-            res.status(err.statusCode).send({error : err.reason});
+            var error = {};
+            error.error = true;
+            error.app = spec.Name;
+            error.status = err.statusCode;
+            error.reason = err.reason;
+            console.log(err);
+            res.send(error);
         }
         else{
+            data.error = false;
+            data.app = spec.Name;
             res.send(data);
         }
-    });
+    })
 });
 
 router.post("/task",function(req, res, next){
