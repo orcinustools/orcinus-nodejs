@@ -7,11 +7,16 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var orcinusd = require('orcinusd');
-var config = require('./config.js');
 
 module.exports = function(){
-  
+  /*
+    Environment :
+    ORCINUS_HOST=<hostname>
+    ORCINUS_PORT=<port>
+    ORCINUS_HTTP_CORS= example : http://domain1.com, http://domain2.com or *
+  */
   var PORT 	= process.env.ORCINUS_PORT || 4000;
+  var CORS = process.env.ORCINUS_HTTP_CORS || false;
   var ping = require("./apis/ping");
   var info = require("./apis/info");
   var cluster = require("./apis/cluster");
@@ -20,9 +25,9 @@ module.exports = function(){
   var task = require("./apis/task");
   var volume = require("./apis/volume");
 
-  if(config.http.cors){
+  if(CORS){
     app.use(function(req, res, next) {
-      res.header("Access-Control-Allow-Origin", config.http.cors);
+      res.header("Access-Control-Allow-Origin", CORS);
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
       next();
     });
