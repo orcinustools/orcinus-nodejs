@@ -1,6 +1,7 @@
 PREFIX := /usr/local/bin
 CONFIG_DIRS := config
 SRC := $(PWD)
+VERSION := 0.1.4
 
 .PHONY: all clean build frontend install prebuild orcinusd docker push run
 
@@ -34,9 +35,11 @@ orcinusd:
 			systemctl start orcinusd
 
 docker:
-			docker build -t orcinus/orcinus:latest .
+			docker build -t orcinus/orcinus:$(VERSION) .
+			docker tag orcinus/orcinus:$(VERSION) orcinus/orcinus:latest
 
 push:
+			docker push orcinus/orcinus:$(VERSION)
 			docker push orcinus/orcinus:latest
 
 run:
