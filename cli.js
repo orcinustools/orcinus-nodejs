@@ -56,7 +56,7 @@ if(program.file){
   //cliValidation();
 }
 
-if(!program.dashboard && !program.cluster && !program.ls){
+if(!program.dashboard && !program.cluster && !program.ls && !program.scale){
   if(!data){
     var defaultManifest = "orcinus";
     // Favor yaml over json
