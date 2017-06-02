@@ -20,7 +20,7 @@
 # X-Forwarded-Server: 8fbc39271b4c
 
 
-stack: "traefik"
+stack: "orcinus"
 services:
     treafik:
         image: "traefik"

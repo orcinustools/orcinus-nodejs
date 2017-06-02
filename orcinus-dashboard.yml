@@ -20,8 +20,8 @@ services:
         - "docker"
     dashboard:
         image: "orcinus/orcinus"
-        ports:
-        - "4000:4000" # remove ports for production
+        # ports:
+        # - "4000:4000" # remove ports for production
         constraint: "node.role==manager"
         volumes:
         - "docker"
