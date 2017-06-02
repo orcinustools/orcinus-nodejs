@@ -37,4 +37,16 @@ router.post('/delete', function (req, res, next) {
   });
 });
 
+router.post('/pause', function (req, res, next) {
+  var cnt = req.app.locals.orcinus.getContainer(req.body.id);
+  cnt.pause(function (err, data) {
+      if(err){
+        res.status(err.statusCode).send({error : err.reason});
+      }
+      else{
+          res.send(data);
+      }
+  });	
+});
+
 module.exports = router;
