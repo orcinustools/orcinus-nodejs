@@ -22,6 +22,34 @@ router.post("/",function(req, res, next){
     });
 });
 
+router.post("/inspect", function(req, res, next) {
+    console.log("Stack ID", req.body.id);
+    var stk = req.app.locals.orcinus.getNetwork(req.body.id);
+    stk.inspect(function(err, data) {
+        if(err) {
+            console.log(err);
+            res.status(err.statusCode).send({error: err.reason});
+        }
+        else {
+            res.send(data);
+        }
+    });
+});
+
+router.post("/delete", function(req, res, next) {
+    console.log("Stack ID", req.body.id);
+    var stk = req.app.locals.orcinus.getNetwork(req.body.id);
+    stk.remove(function(err, data) {
+        if(err) {
+            console.log(err);
+            res.status(err.statusCode).send({error: err.reason});
+        }
+        else {
+            res.send(data);
+        }
+    });
+});
+
 router.post("/create",function(req, res, next){
     console.log("Create Stack : "+req.body.name);
     req.app.locals.orcinus.createStack(req.body.name,function (err, data) {

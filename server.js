@@ -24,6 +24,7 @@ module.exports = function(){
   var stack = require("./apis/stack");
   var task = require("./apis/task");
   var volume = require("./apis/volume");
+  var container = require("./apis/container");
 
   if(CORS){
     app.use(function(req, res, next) {
@@ -53,6 +54,7 @@ module.exports = function(){
   app.use('/apis/stack', stack);
   app.use('/apis/task', task);
   app.use('/apis/volume', volume);
+  app.use('/apis/container', container);
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
     var err = new Error('Not Found');
