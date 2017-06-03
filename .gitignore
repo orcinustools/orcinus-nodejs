@@ -11,3 +11,4 @@ lib/coverage.json
 lib/lcov-report/
 lib/lcov.info
 config.js
+orcinus.dll
