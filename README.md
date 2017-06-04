@@ -1,4 +1,6 @@
 # Orcinus
+![Build Status](https://travis-ci.org/orcinustools/orcinus.svg?branch=dev)
+
 Container orchestration management tools for docker swarm mode.
 
 # Quick Start
