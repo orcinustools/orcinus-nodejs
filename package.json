@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/anak10thn/orcinus#readme",
   "dependencies": {
+    "async": "^2.4.1",
     "base-64": "^0.1.0",
     "body-parser": "~1.15.1",
     "bytes": "^2.5.0",
