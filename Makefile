@@ -3,7 +3,7 @@ CONFIG_DIRS := config
 SRC := $(PWD)
 VERSION := 0.1.4
 
-.PHONY: all clean build frontend install prebuild orcinusd docker push run
+.PHONY: all clean build frontend install prebuild orcinusd docker push run test
 
 all: build
 
@@ -45,3 +45,6 @@ push:
 run:
 			echo "Dashboard starting.........."
 			node cli.js dashboard
+test:
+			npm install
+			npm run test

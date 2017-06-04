@@ -4,5 +4,4 @@ services:
   - docker
 
 script:
-- make docker
-- make push
+- make test
