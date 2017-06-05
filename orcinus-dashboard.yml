@@ -19,14 +19,20 @@ services:
         volumes:
         - "docker"
     dashboard:
-        image: "orcinus/orcinus"
+        image: "orcinus/orcinus:dev"
         # ports:
         # - "4000:4000" # remove ports for production
         constraint: "node.role==manager"
+        environments:
+        - "ORCINUS_HTTP_CORS='*'"
+        - "ORCINUS_OMURA=repository:8080"
         volumes:
         - "docker"
         labels:
             traefik.port: "4000"
+    repository:
+        image: "orcinus/omura"
+        constraint: "node.role==manager"
 
 volumes:
     docker:
