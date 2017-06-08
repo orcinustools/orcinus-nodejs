@@ -19,6 +19,8 @@ frontend:
 build:
 			npm install
 			nexe
+			mkdir bin
+			mv orcinus bin/orcinus
 
 install:
 			cp -rf orcinus $(PREFIX)
