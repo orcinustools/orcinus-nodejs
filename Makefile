@@ -16,7 +16,7 @@ frontend:
 			mv ./dashboard/dist www
 			rm -rf dashboard
 
-build: frontend
+build:
 			npm install
 			nexe
 
