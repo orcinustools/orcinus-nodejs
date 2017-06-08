@@ -5,7 +5,8 @@ node_js:
 - '7'
 script:
 - make test
-- make prebuild
+- if [ -n "$TRAVIS_TAG" ]; then make prebuild; make build; fi
+- 
 - make build
 deploy:
   provider: releases
