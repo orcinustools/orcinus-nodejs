@@ -8,7 +8,7 @@ node_js:
 
 script:
 - make test
-- if [ -n "$TRAVIS_TAG" ]; then make prebuild; make build; mv bin/orcinus bin/orcinus-$TRAVIS_TAG-$(uname -s)-$(uname -m).bin fi
+- if [ -n "$TRAVIS_TAG" ]; then make prebuild; make build; mv bin/orcinus bin/orcinus-$TRAVIS_TAG-$(uname -s)-$(uname -m).bin; fi
 
 deploy:
   provider: releases
