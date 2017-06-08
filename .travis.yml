@@ -1,13 +1,15 @@
 sudo: required
+
 services:
 - docker
+
 node_js:
 - '7'
+
 script:
 - make test
 - if [ -n "$TRAVIS_TAG" ]; then make prebuild; make build; fi
-- 
-- make build
+
 deploy:
   provider: releases
   api_key:
