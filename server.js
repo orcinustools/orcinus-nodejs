@@ -6,6 +6,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var url = require("url");
 var orcinusd = require('orcinusd');
 
 module.exports = function(){
@@ -17,6 +18,7 @@ module.exports = function(){
   */
   var PORT 	= process.env.ORCINUS_PORT || 4000;
   var CORS = process.env.ORCINUS_HTTP_CORS || false;
+  var SOCK = process.env.ORCINUS_DOCKER_SOCKET || "/var/run/docker.sock";
   var ping = require("./apis/ping");
   var info = require("./apis/info");
   var cluster = require("./apis/cluster");
@@ -34,12 +36,24 @@ module.exports = function(){
     });
   }
 
+  if(SOCK.indexOf("http") >= 0 || SOCK.indexOf("https") >= 0){
+    var sockParse = url.parse(SOCK);
+    var proto = sockParse.protocol.replace(":","");
+    var host = sockParse.hostname;
+    var port = sockParse.port;
+    SOCK = {protocol: proto, host: host, port: port};
+
+  }
+  else{
+    SOCK = { socketPath: SOCK };
+  }
+
   app.use(logger('dev'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(cookieParser());
 
-  app.locals.orcinus = new orcinusd({socketPath: '/var/run/docker.sock'});
+  app.locals.orcinus = new orcinusd(SOCK);
 
   app.use(express.static(path.join(__dirname, './www')));
 
