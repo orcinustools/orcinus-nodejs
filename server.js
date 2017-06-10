@@ -8,6 +8,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var url = require("url");
 var orcinusd = require('orcinusd');
+var db = require("./db");
+var oauthServer = require('express-oauth-server');
 
 module.exports = function(){
   /*
@@ -19,6 +21,8 @@ module.exports = function(){
   var PORT 	= process.env.ORCINUS_PORT || 4000;
   var CORS = process.env.ORCINUS_HTTP_CORS || false;
   var SOCK = process.env.ORCINUS_DOCKER_SOCKET || "/var/run/docker.sock";
+  var DBHOST = process.env.ORCINUS_DB || "orcinusdb/orcinus";
+
   var ping = require("./apis/ping");
   var info = require("./apis/info");
   var cluster = require("./apis/cluster");
@@ -27,6 +31,23 @@ module.exports = function(){
   var task = require("./apis/task");
   var volume = require("./apis/volume");
   var container = require("./apis/container");
+
+  /*
+  * Database connection
+  */
+
+  var orcinusdb = db(DBHOST);
+
+  /*
+  * Oauth 2 init
+  */
+
+  app.oauth = new oauthServer({
+    debug: true,
+    useErrorHandler: false, 
+    continueMiddleware: false,
+    model: db.oauth2
+  });
 
   if(CORS){
     app.use(function(req, res, next) {
@@ -61,6 +82,20 @@ module.exports = function(){
       res.sendFile(path.join(__dirname, './www', 'index.html'));
   });
 
+  /*
+  * Oauth2 router
+  */
+  app.get("/oauth/authorize", function(req, res) {
+    res.send({ error : "need authorize!!!" });
+  });
+  app.post("/oauth/authorize", app.oauth.authorize());
+  app.post("/oauth/token", app.oauth.token());
+
+  /*
+  * Apis router
+  */
+
+  app.use('/apis',app.oauth.authorize())
   app.use('/apis/ping', ping);
   app.use('/apis/info', info);
   app.use('/apis/cluster', cluster);
