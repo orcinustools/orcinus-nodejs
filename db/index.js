@@ -10,6 +10,6 @@ var db = function(host){
 	});
 }
 
-db.oauth2 = require('./model/oauth2');
+db.users	= require('./model/users');
 
 module.exports = db;
