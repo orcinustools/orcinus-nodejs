@@ -6,7 +6,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var url = require("url");
 var orcinusd = require('orcinusd');
+var db = require("./db");
+var jwt = require('jsonwebtoken');
+var authMW = express.Router();
 
 module.exports = function(){
   /*
@@ -17,6 +21,10 @@ module.exports = function(){
   */
   var PORT 	= process.env.ORCINUS_PORT || 4000;
   var CORS = process.env.ORCINUS_HTTP_CORS || false;
+  var SOCK = process.env.ORCINUS_DOCKER_SOCKET || "/var/run/docker.sock";
+  var DBHOST = process.env.ORCINUS_DB || "orcinusdb/orcinus";
+  var SECRET = process.env.ORCINUS_SECRET || "orcinus";
+
   var ping = require("./apis/ping");
   var info = require("./apis/info");
   var cluster = require("./apis/cluster");
@@ -25,6 +33,14 @@ module.exports = function(){
   var task = require("./apis/task");
   var volume = require("./apis/volume");
   var container = require("./apis/container");
+  var auth = require("./apis/auth");
+
+  /*
+  * Database connection
+  */
+
+  app.locals.orcinusdb = db(DBHOST);
+  db.users();
 
   if(CORS){
     app.use(function(req, res, next) {
@@ -34,12 +50,24 @@ module.exports = function(){
     });
   }
 
+  if(SOCK.indexOf("http") >= 0 || SOCK.indexOf("https") >= 0){
+    var sockParse = url.parse(SOCK);
+    var proto = sockParse.protocol.replace(":","");
+    var host = sockParse.hostname;
+    var port = sockParse.port;
+    SOCK = {protocol: proto, host: host, port: port};
+  }
+  else{
+    SOCK = { socketPath: SOCK };
+  }
+
   app.use(logger('dev'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(cookieParser());
 
-  app.locals.orcinus = new orcinusd({socketPath: '/var/run/docker.sock'});
+  app.locals.orcinus = new orcinusd(SOCK);
+  app.locals.secret = SECRET;
 
   app.use(express.static(path.join(__dirname, './www')));
 
@@ -47,18 +75,62 @@ module.exports = function(){
       res.sendFile(path.join(__dirname, './www', 'index.html'));
   });
 
-  app.use('/apis/ping', ping);
-  app.use('/apis/info', info);
-  app.use('/apis/cluster', cluster);
-  app.use('/apis/service', service);
-  app.use('/apis/stack', stack);
-  app.use('/apis/task', task);
-  app.use('/apis/volume', volume);
-  app.use('/apis/container', container);
+  /*
+  * Authentication
+  */
+
+  // midleware
+
+  authMW.use(function(req, res, next) {
+    // check header or url parameters or post parameters for token
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+    // decode token
+    if (token) {
+
+      // verifies secret and checks exp
+      jwt.verify(token, SECRET, function(err, decoded) {      
+        if (err) {
+          return res.status(403).json({ success: false, message: 'Failed to authenticate token.' });    
+        } else {
+          // if everything is good, save to request for use in other routes
+          req.decoded = decoded;    
+          next();
+        }
+      });
+
+    } else {
+
+      // if there is no token
+      // return an error
+      return res.status(403).send({ 
+          success: false, 
+          message: 'No token provided.' 
+      });
+
+    }
+  });
+
+  app.use('/auth', auth);
+
+  /*
+  * Apis router
+  */
+
+  app.use('/apis/ping', authMW, ping);
+  app.use('/apis/info', authMW, info);
+  app.use('/apis/cluster', authMW, cluster);
+  app.use('/apis/service', authMW, service);
+  app.use('/apis/stack', authMW, stack);
+  app.use('/apis/task', authMW, task);
+  app.use('/apis/volume', authMW, volume);
+  app.use('/apis/container', authMW, container);
+
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
+    console.log("Page Not Found!");
     res.sendFile(path.join(__dirname, './www', 'index.html'));
   });
 
