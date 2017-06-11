@@ -20,7 +20,11 @@ UserSchema = new Schema({
 		required: true,
 		unique: true
 	},
-  admin: { type: Boolean }
+  admin: { type: Boolean },
+  verify: {
+    type: Boolean,
+    default: true
+  }
 });
 
 UserSchema.pre('save', function(next) {
