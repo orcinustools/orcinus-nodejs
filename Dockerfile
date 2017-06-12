@@ -8,18 +8,13 @@ RUN set -ex \
     && apk add --update --no-cache --virtual .build-deps \
     python \
 		make \
-		g++
+		g++; \
+		&& npm install -g; \
+		&& apk del .build-deps
+
 
 COPY entrypoint /entrypoint
 RUN chmod +x /entrypoint
-
-RUN mkdir -p /opt/orcinus
-COPY . /opt/orcinus
-
-RUN cd /opt/orcinus/; \
-npm install -g
-
-RUN apk del .build-deps
 
 EXPOSE 4000
 ENTRYPOINT ["/entrypoint"]
