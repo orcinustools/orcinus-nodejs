@@ -125,7 +125,7 @@ module.exports = function(){
     }
   });
 
-  app.use('/auth', auth);
+  app.use('/auth', cors(corsOpt), auth);
 
   /*
   * Apis router
