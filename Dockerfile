@@ -8,8 +8,8 @@ RUN set -ex \
     && apk add --update --no-cache --virtual .build-deps \
     python \
 		make \
-		g++; \
-		&& npm install -g; \
+		g++ \
+		&& npm install -g \
 		&& apk del .build-deps
 
 
