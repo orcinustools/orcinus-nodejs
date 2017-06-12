@@ -1,9 +1,8 @@
-PREFIX := /usr/local/bin
 CONFIG_DIRS := config
 SRC := $(PWD)
-VERSION := 0.1.4
+VERSION := 0.2.7
 
-.PHONY: all clean build frontend install prebuild orcinusd docker push run test
+.PHONY: all clean build frontend install prebuild docker production production-remove push run test
 
 all: build
 
@@ -23,24 +22,29 @@ build:
 			mv orcinus bin/orcinus
 
 install:
-			cp -rf orcinus $(PREFIX)
+			@echo "===> Install orcinus CLI"
+			@npm install -g
+
+production: install
+			@echo "===> Install orcinus webserver"
+			@orcinus create -f ./production/webserver/orcinus.yml
+			@echo "===> Install orcinus dashboard"
+			@orcinus create -f ./production/dashboard/orcinus.yml
+
+production-remove:
+			@echo "===> Remove orcinus webserver"
+			@orcinus rm -f ./production/webserver/orcinus.yml
+			@echo "===> Remove orcinus dashboard"
+			@orcinus rm -f ./production/dashboard/orcinus.yml
 
 clean:
-			rm -rf build orcinus www
-
-orcinusd:
-			systemctl stop docker
-			systemctl disable docker
-			cp $(CONFIG_DIRS)/orcinusd.service /lib/systemd/system
-			chmod 644 /lib/systemd/system/orcinusd.service
-			systemctl enable orcinusd
-			systemctl start orcinusd
+			rm -rf build bin www coverage
 
 docker:
 			docker build -t orcinus/orcinus:$(VERSION) .
 			docker tag orcinus/orcinus:$(VERSION) orcinus/orcinus:latest
 
-push:
+push:	docker
 			docker push orcinus/orcinus:$(VERSION)
 			docker push orcinus/orcinus:latest
 

@@ -24,7 +24,7 @@ module.exports = function(){
   var PORT 	= process.env.ORCINUS_PORT || 4000;
   var CORS = process.env.ORCINUS_HTTP_CORS || false;
   var SOCK = process.env.ORCINUS_DOCKER_SOCKET || "/var/run/docker.sock";
-  var DBHOST = process.env.ORCINUS_DB || "orcinusdb/orcinus";
+  var DBHOST = process.env.ORCINUS_DB || "orcinus-db/orcinus";
   var SECRET = process.env.ORCINUS_SECRET || "orcinus";
 
   var ping = require("./apis/ping");
@@ -53,7 +53,7 @@ module.exports = function(){
     }
 
   if(CORS){
-    console.log(colors.red("==> HTTP CORS Active!"));
+    console.log(colors.yellow("==> HTTP CORS Active!"));
     corsOpt = {
       "origin": CORS,
       "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -152,7 +152,7 @@ module.exports = function(){
     if (error) {
       console.error(error);
     } else {
-      console.info(colors.green("==> 🌎 Listening on port %s. Visit http://%s:%s/ in your browser."), PORT,process.env.ORCINUS_HOST, PORT);
+      console.info(colors.green("==> Listening on port %s. Visit http://%s:%s/ in your browser."), PORT,process.env.ORCINUS_HOST, PORT);
     }
   });
   return app;

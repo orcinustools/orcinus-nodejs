@@ -1,3 +1,0 @@
-#!/bin/sh
-#orcinusd TCP-LISTEN:6969,bind=0.0.0.0,reuseaddr,fork UNIX-CONNECT:/var/run/docker.sock &
-orcinus dashboard
