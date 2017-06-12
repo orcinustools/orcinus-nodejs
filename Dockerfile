@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:7.10.0-alpine
 MAINTAINER ibnu yahya <anak10thn@gmail.com>
 
 ENV LANG=C.UTF-8 LC_ALL=C
