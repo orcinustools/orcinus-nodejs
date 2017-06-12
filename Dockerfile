@@ -8,7 +8,7 @@ RUN set -ex \
     && apk add --no-cache --virtual .build-deps \
     gcc libc-dev git python2 make 
 
-COPY entrypoint /entrypoint.sh
+COPY entrypoint /entrypoint
 RUN chmod +x /entrypoint
 
 RUN mkdir -p /opt/orcinus
