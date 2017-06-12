@@ -6,7 +6,9 @@ ENV NODE_PATH=/usr/lib/node_modules
 
 RUN set -ex \
     && apk add --update --no-cache --virtual .build-deps \
-    gcc libc-dev git python2 make 
+    python \
+		make \
+		g++
 
 COPY entrypoint /entrypoint
 RUN chmod +x /entrypoint
@@ -14,8 +16,7 @@ RUN chmod +x /entrypoint
 RUN mkdir -p /opt/orcinus
 COPY . /opt/orcinus
 
-RUN npm install -g node-gyp; \
-cd /opt/orcinus/; \
+RUN cd /opt/orcinus/; \
 npm install -g
 
 RUN apk del .build-deps
