@@ -3,6 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var jwt = require('jsonwebtoken');
+var jwtDecode = require('jwt-decode');
 
 var userModel = mongoose.model('Users');
 
@@ -67,6 +68,18 @@ router.route("/signin")
 	    });
 	  }
   });
+});
+
+router.route("/me")
+.all(function(req, res, next) {
+	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	if(token){
+		var decoded = jwtDecode(token);
+		res.json(decoded);
+	}
+	else{
+		res.json({});
+	}
 })
 
 module.exports = router;

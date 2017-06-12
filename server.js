@@ -7,6 +7,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var url = require("url");
+var colors = require('colors');
 var orcinusd = require('orcinusd');
 var db = require("./db");
 var jwt = require('jsonwebtoken');
@@ -138,7 +139,7 @@ module.exports = function(){
     if (error) {
       console.error(error);
     } else {
-      console.info("==> 🌎 Listening on port %s. Visit http://%s:%s/ in your browser.", PORT,process.env.ORCINUS_HOST, PORT);
+      console.info(colors.green("==> 🌎 Listening on port %s. Visit http://%s:%s/ in your browser."), PORT,process.env.ORCINUS_HOST, PORT);
     }
   });
   return app;
