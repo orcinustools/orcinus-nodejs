@@ -1,5 +1,6 @@
 var path 	= require('path');
 var express = require('express');
+var cors = require('cors');
 var app 	= express();
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -43,13 +44,26 @@ module.exports = function(){
   app.locals.orcinusdb = db(DBHOST);
   db.users();
 
+  var corsOpt = {
+      "origin": false,
+      "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+      "preflightContinue": false,
+      "optionsSuccessStatus": 204,
+      "allowedHeaders": ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization", "x-access-token"]
+    }
+
   if(CORS){
-    app.use(function(req, res, next) {
-      res.header("Access-Control-Allow-Origin", CORS);
-      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token");
-      next();
-    });
+    console.log(colors.red("==> HTTP CORS Active!"));
+    corsOpt = {
+      "origin": CORS,
+      "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+      "preflightContinue": false,
+      "optionsSuccessStatus": 204,
+      "allowedHeaders": ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization", "x-access-token"]
+    }
   }
+
+  app.options('*', cors(corsOpt))
 
   if(SOCK.indexOf("http") >= 0 || SOCK.indexOf("https") >= 0){
     var sockParse = url.parse(SOCK);
@@ -82,10 +96,9 @@ module.exports = function(){
 
   // midleware
 
-  authMW.use(function(req, res, next) {
+  authMW.use(cors(corsOpt),function(req, res, next) {
     // check header or url parameters or post parameters for token
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
-
     // decode token
     if (token) {
 
@@ -131,7 +144,7 @@ module.exports = function(){
   app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
-    console.log("Page Not Found!");
+    console.log(colors.red("Page Not Found!"));
     res.sendFile(path.join(__dirname, './www', 'index.html'));
   });
 
