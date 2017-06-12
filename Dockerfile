@@ -13,7 +13,11 @@ RUN chmod +x /entrypoint
 
 RUN mkdir -p /opt/orcinus
 COPY . /opt/orcinus
-RUN cd /opt/orcinus/; npm install -g; cd /; rm -rf /opt/orcinus
+
+RUN npm install -g node-gyp; \
+cd /opt/orcinus/; \
+npm install -g; cd /; \
+rm -rf /opt/orcinus
 
 RUN apk del .build-deps
 
