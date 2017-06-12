@@ -9,6 +9,7 @@ RUN set -ex \
     python \
 		make \
 		g++ \
+		&& npm install -g node-gyp \
 		&& npm install -g \
 		&& apk del .build-deps
 
