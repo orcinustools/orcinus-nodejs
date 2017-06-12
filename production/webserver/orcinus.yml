@@ -1,0 +1,21 @@
+stack: "orcinus"
+services:
+    orcinus-webserver:
+        image: "traefik"
+        ports:
+        - "80:80"
+        - "8080:8080"
+        constraint: "node.role==manager"
+        commands:
+        - "--docker"
+        - "--docker.swarmmode"
+        - "--docker.domain=svc.orcinus.id" # set main domain for production
+        - "--docker.watch"
+        - "--web"
+        volumes:
+        - "docker"
+volumes:
+    docker:
+        type: "bind"
+        source: "/var/run/docker.sock"
+        target: "/var/run/docker.sock"
