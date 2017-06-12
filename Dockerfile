@@ -16,8 +16,7 @@ COPY . /opt/orcinus
 
 RUN npm install -g node-gyp; \
 cd /opt/orcinus/; \
-npm install -g; cd /; \
-rm -rf /opt/orcinus
+npm install -g
 
 RUN apk del .build-deps
 
