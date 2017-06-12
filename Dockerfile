@@ -13,6 +13,7 @@ RUN set -ex \
     python \
 		make \
 		g++ \
+		build-base \
 		&& npm install -g node-gyp \
 		&& npm install -g \
 		&& apk del .build-deps
