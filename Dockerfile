@@ -11,12 +11,8 @@ WORKDIR /opt/orcinus
 RUN set -ex \
     && apk add --update --no-cache --virtual .build-deps \
     python \
-		make \
-		g++ \
-		gcc \
 		build-base \
-		&& npm install -g node-gyp \
-		&& npm install -g \
+		&& npm install \
 		&& apk del .build-deps
 
 

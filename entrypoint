@@ -1,2 +1,3 @@
 #!/bin/sh
-orcinus dashboard
+cd /opt/orcinus
+node cli.js dashboard
