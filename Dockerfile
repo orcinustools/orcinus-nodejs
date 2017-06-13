@@ -15,7 +15,7 @@ RUN set -ex \
 		g++ \
 		build-base \
 		&& npm install -g node-gyp \
-		&& npm install bcrypt@1.0.2 \
+		&& npm install -g bcrypt@1.0.2 \
 		&& npm install -g \
 		&& apk del .build-deps
 
