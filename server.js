@@ -22,6 +22,7 @@ module.exports = function(){
     ORCINUS_HTTP_CORS= example : http://domain1.com, http://domain2.com or *
   */
   var PORT 	= process.env.ORCINUS_PORT || 4000;
+  var HOST  = process.env.ORCINUS_HOST || "0.0.0.0";
   var CORS = process.env.ORCINUS_HTTP_CORS || false;
   var SOCK = process.env.ORCINUS_DOCKER_SOCKET || "/var/run/docker.sock";
   var DBHOST = process.env.ORCINUS_DB || "orcinus-db/orcinus";
@@ -148,11 +149,11 @@ module.exports = function(){
     res.sendFile(path.join(__dirname, './www', 'index.html'));
   });
 
-  app.listen(PORT, function(error) {
+  app.listen(parseInt(PORT), HOST, function(error) {
     if (error) {
       console.error(error);
     } else {
-      console.info(colors.green("==> Listening on port %s. Visit http://%s:%s/ in your browser."), PORT,process.env.ORCINUS_HOST, PORT);
+      console.info(colors.green("==> Listening on port %s. Visit http://%s:%s/ in your browser."), PORT,HOST, PORT);
     }
   });
   return app;

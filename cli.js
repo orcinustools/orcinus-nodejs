@@ -162,7 +162,7 @@ if(program.dashboard){
     process.env['ORCINUS_PORT'] = environtment[1];
   }
   else{
-    process.env['ORCINUS_HOST'] = "127.0.0.1";
+    process.env['ORCINUS_HOST'] = "0.0.0.0";
     process.env['ORCINUS_PORT'] = "4000";
   }
   web();
