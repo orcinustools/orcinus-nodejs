@@ -8,9 +8,11 @@ services:
         image: "orcinus/orcinus:dev"
         constraint: "node.role==manager"
         environment:
+        - "ORCINUS=prod"
         - "ORCINUS_HTTP_CORS='*'"
         - "ORCINUS_OMURA=orcinus-repository:8080"
         - "ORCINUS_DB=orcinus-db/orcinus"
+        - "ORCINUS_DOMAIN=svc.orcinus.id"
         volumes:
         - "docker"
         networks:

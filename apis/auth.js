@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var jwt = require('jsonwebtoken');
 var jwtDecode = require('jwt-decode');
+var utils = require('../lib/utils.js');
 
 var userModel = mongoose.model('Users');
 
@@ -50,7 +51,7 @@ router.route("/signin")
 	      	userJWT = {
 	      		username : user.username,
 	      		email : user.email,
-	      		id : user.__v
+	      		id : user._id
 	      	};
 		      var token = jwt.sign(userJWT, req.app.locals.secret, {
 		        expiresIn: 60*60*24 // expires in 24 hours

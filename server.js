@@ -21,12 +21,15 @@ module.exports = function(){
     ORCINUS_PORT=<port>
     ORCINUS_HTTP_CORS= example : http://domain1.com, http://domain2.com or *
   */
+  var DEPLOYMENT = process.env.ORCINUS || "dev";
   var PORT 	= process.env.ORCINUS_PORT || 4000;
   var HOST  = process.env.ORCINUS_HOST || "0.0.0.0";
   var CORS = process.env.ORCINUS_HTTP_CORS || false;
   var SOCK = process.env.ORCINUS_DOCKER_SOCKET || "/var/run/docker.sock";
   var DBHOST = process.env.ORCINUS_DB || "orcinus-db/orcinus";
   var SECRET = process.env.ORCINUS_SECRET || "orcinus";
+  var OMURA = process.env.ORCINUS_OMURA;
+  var ENDPOINT = process.env.ORCINUS_DOMAIN;
 
   var ping = require("./apis/ping");
   var info = require("./apis/info");
@@ -127,6 +130,20 @@ module.exports = function(){
   });
 
   app.use('/auth', cors(corsOpt), auth);
+
+  /*
+  * INFO
+  */
+
+  app.use('/info', cors(corsOpt), function(req, res, next) {
+    var info = {
+      repository: OMURA,
+      cors: corsOpt.origin,
+      deployment: DEPLOYMENT,
+      endpoint: ENDPOINT
+    }
+    res.send(info);
+  });
 
   /*
   * Apis router

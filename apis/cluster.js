@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var utils = require('../lib/utils.js');
 
 router.get("/",function(req, res, next){
     req.app.locals.orcinus.cluster(function (err, data) {
