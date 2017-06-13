@@ -30,6 +30,7 @@ module.exports = function(){
   var SECRET = process.env.ORCINUS_SECRET || "orcinus";
   var OMURA = process.env.ORCINUS_OMURA;
   var ENDPOINT = process.env.ORCINUS_DOMAIN;
+  var NETWORK = process.env.ORCINUS_NETWORK || "orcinus";
 
   var ping = require("./apis/ping");
   var info = require("./apis/info");
