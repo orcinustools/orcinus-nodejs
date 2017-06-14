@@ -1,3 +1,4 @@
+var package = require('package.json')
 var path 	= require('path');
 var express = require('express');
 var cors = require('cors');
@@ -139,13 +140,13 @@ module.exports = function(){
     }
   });
 
-  app.use('/auth', cors(corsOpt), auth);
+  app.use('/apis/auth', cors(corsOpt), auth);
 
   /*
   * INFO
   */
 
-  app.use('/info', cors(corsOpt), function(req, res, next) {
+  app.use('/apis/info', cors(corsOpt), function(req, res, next) {
     var info = {
       repository: OMURA,
       cors: corsOpt.origin,
