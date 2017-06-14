@@ -1,4 +1,4 @@
-var package = require('package.json')
+var package = require('./package.json')
 var path 	= require('path');
 var express = require('express');
 var cors = require('cors');
@@ -148,6 +148,10 @@ module.exports = function(){
 
   app.use('/apis/info', cors(corsOpt), function(req, res, next) {
     var info = {
+      name: package.name,
+      version: package.version,
+      description: package.description,
+      bugs: package.bugs,
       repository: OMURA,
       cors: corsOpt.origin,
       deployment: DEPLOYMENT,
@@ -173,7 +177,6 @@ module.exports = function(){
   app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
-    console.log(colors.red("Page Not Found!"));
     res.sendFile(path.join(__dirname, './www', 'index.html'));
   });
 

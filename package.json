@@ -1,7 +1,7 @@
 {
   "name": "orcinus",
   "version": "0.2.7",
-  "description": "Docker Swarm Compose Tools",
+  "description": "Container orchestration tools",
   "main": "cli.js",
   "scripts": {
     "test": "node test/pre-post.js pre && sleep 5 && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test/test.js && node test/pre-post.js post"
