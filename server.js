@@ -27,8 +27,14 @@ module.exports = function(){
   var CORS = process.env.ORCINUS_HTTP_CORS || false;
   var SOCK = process.env.ORCINUS_DOCKER_SOCKET || "/var/run/docker.sock";
   var DBHOST = process.env.ORCINUS_DB || "orcinus-db/orcinus";
-  var SECRET = process.env.ORCINUS_SECRET || "orcinus";
+  if(!process.env.ORCINUS_SECRET){
+    process.env.ORCINUS_SECRET = "orcinus"
+  }
+  var SECRET = process.env.ORCINUS_SECRET;
   var OMURA = process.env.ORCINUS_OMURA;
+  if(!process.env.ORCINUS_DOMAIN){
+    process.env.ORCINUS_DOMAIN = "svc.orcinus.id"
+  }
   var ENDPOINT = process.env.ORCINUS_DOMAIN;
   var NETWORK = process.env.ORCINUS_NETWORK || "orcinus";
 

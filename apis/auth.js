@@ -54,7 +54,7 @@ router.route("/signin")
 	      		id : user._id
 	      	};
 		      var token = jwt.sign(userJWT, req.app.locals.secret, {
-		        expiresIn: 60*60*24 // expires in 24 hours
+		        expiresIn: 60*60 // expires in 1 hours
 		      });
 		      // return the information including token as JSON
 		      res.json({
