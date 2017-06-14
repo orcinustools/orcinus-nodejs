@@ -36,7 +36,10 @@ module.exports = function(){
     process.env.ORCINUS_DOMAIN = "svc.orcinus.id"
   }
   var ENDPOINT = process.env.ORCINUS_DOMAIN;
-  var NETWORK = process.env.ORCINUS_NETWORK || "orcinus";
+  if(!process.env.ORCINUS_NETWORK){
+    process.env.ORCINUS_NETWORK = "orcinus"
+  }
+  var NETWORK = process.env.ORCINUS_NETWORK;
 
   var ping = require("./apis/ping");
   var info = require("./apis/info");
