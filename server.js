@@ -32,7 +32,7 @@ module.exports = function(){
     process.env.ORCINUS_SECRET = "orcinus"
   }
   var SECRET = process.env.ORCINUS_SECRET;
-  var OMURA = process.env.ORCINUS_OMURA;
+  var OMURA = process.env.ORCINUS_OMURA || "omura.orcinus.id";
   if(!process.env.ORCINUS_DOMAIN){
     process.env.ORCINUS_DOMAIN = "svc.orcinus.id"
   }
