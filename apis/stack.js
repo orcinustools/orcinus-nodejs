@@ -50,8 +50,9 @@ router.post("/create",function(req, res, next){
     console.log("Create Stack : "+name);
     req.app.locals.orcinus.createStack(name,function (err, data) {
         if(err){
-            console.log(err);
-            res.status(err.statusCode).send({error : err.reason});
+            utils.debug(err);
+            //res.status(err.statusCode).send({error : err.reason});
+            res.status(200).send({error : err.reason});
         }
         else{
             res.send(data);
