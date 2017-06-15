@@ -1,0 +1,14 @@
+# testing :
+#
+# curl -H Host:omura.orcinus.id http://127.0.0.1
+
+stack: "orcinus-dashboard"
+services:
+    orcinus-repository:
+        image: "orcinus/omura"
+        constraint: "node.role==manager"
+        networks:
+        - "orcinus"
+        labels:
+            traefik.port: "8080"
+            traefik.frontend.rule: "Host:omura.orcinus.id"

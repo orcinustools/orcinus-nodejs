@@ -30,12 +30,20 @@ production: install
 			@orcinus create -f ./production/webserver/orcinus.yml
 			@echo "===> Install orcinus dashboard"
 			@orcinus create -f ./production/dashboard/orcinus.yml
+			@echo "===> Install orcinus repository"
+			@orcinus create -f ./production/repository/orcinus.yml
+			@echo "===> Install orcinus database"
+			@orcinus create -f ./production/db/orcinus.yml
 
 production-remove:
 			@echo "===> Remove orcinus webserver"
 			@orcinus rm -f ./production/webserver/orcinus.yml
 			@echo "===> Remove orcinus dashboard"
 			@orcinus rm -f ./production/dashboard/orcinus.yml
+			@echo "===> Remove orcinus repository"
+			@orcinus create -f ./production/repository/orcinus.yml
+			@echo "===> Remove orcinus database"
+			@orcinus create -f ./production/db/orcinus.yml
 
 clean:
 			rm -rf build bin www coverage
