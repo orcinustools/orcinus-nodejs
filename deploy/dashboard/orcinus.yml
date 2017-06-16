@@ -20,17 +20,6 @@ services:
         labels:
             traefik.port: "4000"
             traefik.frontend.rule: "Host:dashboard.orcinus.id"
-    orcinus-repository:
-        image: "orcinus/omura"
-        constraint: "node.role==manager"
-        networks:
-        - "orcinus"
-        labels:
-            traefik.port: "8080"
-            traefik.frontend.rule: "Host:omura.orcinus.id"
-    orcinus-db:
-        image: "mongo:3.5"
-        constraint: "node.role==manager"
 volumes:
     docker:
         type: "bind"
