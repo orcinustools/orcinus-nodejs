@@ -36,7 +36,7 @@ router.post("/delete", function(req, res, next) {
     stk.remove(function(err, data) {
         if(err) {
             console.log(err);
-            res.status(err.statusCode).send({error: err.reason});
+            res.status(err.statusCode).send({error: err.json});
         }
         else {
             res.send(data);
