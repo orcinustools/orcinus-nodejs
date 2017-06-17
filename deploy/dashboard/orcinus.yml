@@ -13,6 +13,7 @@ services:
         - "ORCINUS_OMURA='http://omura.orcinus.id'"
         - "ORCINUS_DB=orcinus-db/orcinus"
         - "ORCINUS_DOMAIN=svc.orcinus.id"
+        - "ORCINUS_NETWROK=orcinus"
         volumes:
         - "docker"
         networks:
@@ -20,6 +21,7 @@ services:
         labels:
             traefik.port: "4000"
             traefik.frontend.rule: "Host:dashboard.orcinus.id"
+            traefik.docker.network: "orcinus"
 volumes:
     docker:
         type: "bind"
