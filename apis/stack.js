@@ -8,7 +8,8 @@ router.route("/")
     var name = user.id+"-*";
     req.app.locals.orcinus.listStacks(name,function (err, data) {
         if(err){
-            res.status(err.statusCode).send({error : err.reason});
+            utils.debug(err);
+            res.status(err.statusCode).send({error : err.json});
         }
         else{
             res.send(data);
@@ -21,8 +22,8 @@ router.post("/inspect", function(req, res, next) {
     var stk = req.app.locals.orcinus.getNetwork(req.body.id);
     stk.inspect(function(err, data) {
         if(err) {
-            console.log(err);
-            res.status(err.statusCode).send({error: err.reason});
+            utils.debug(err);
+            res.status(err.statusCode).send({error: err.json});
         }
         else {
             res.send(data);
@@ -52,7 +53,7 @@ router.post("/create",function(req, res, next){
         if(err){
             utils.debug(err);
             //res.status(err.statusCode).send({error : err.reason});
-            res.status(200).send({error : err.reason});
+            res.status(200).send({error : err.json});
         }
         else{
             res.send(data);
@@ -65,7 +66,7 @@ router.post("/list-services",function(req, res, next){
 
     req.app.locals.orcinus.listServices(function (err, data) {
         if(err){
-            res.status(err.statusCode).send({error : err.reason});
+            res.status(err.statusCode).send({error : err.json});
         }
         else{
             if(data.length > 0){
