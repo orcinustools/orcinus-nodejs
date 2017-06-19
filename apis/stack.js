@@ -35,7 +35,7 @@ router.post("/delete", function(req, res, next) {
     var stk = req.app.locals.orcinus.getNetwork(req.body.id);
     stk.remove(function(err, data) {
         if(err) {
-            console.log(err);
+            utils.debug(err);
             res.status(err.statusCode).send({error: err.json});
         }
         else {
