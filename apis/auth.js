@@ -25,7 +25,7 @@ router.route("/signup")
 	var user = new userModel(userData);
 	user.save(function(error, data){
       if(error){
-          res.json(error);
+          res.status(403).json(error);
       }
       else{
           res.json(data);
