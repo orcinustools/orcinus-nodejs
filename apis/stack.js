@@ -23,11 +23,9 @@ router.post("/inspect", function(req, res, next) {
     stk.inspect(function(err, data) {
         if(err) {
             utils.debug(err);
-            res.status(err.statusCode).send({error: err.json});
+            return res.status(err.statusCode).send({error: err.json});
         }
-        else {
-            res.send(data);
-        }
+        return res.send(data);
     });
 });
 
@@ -49,7 +47,13 @@ router.post("/create",function(req, res, next){
     var user = utils.decode(req,res);
     var name = user.id+"-"+req.body.name;
     console.log("Create Stack : "+name);
-    req.app.locals.orcinus.createStack(name,function (err, data) {
+    var stack = {
+        Name : name,
+        Labels : {
+            "orcinus.domain" : req.body.domain,
+        }
+    }
+    req.app.locals.orcinus.createStack(stack,function (err, data) {
         if(err){
             utils.debug(err);
             //res.status(err.statusCode).send({error : err.reason});
