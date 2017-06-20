@@ -14,22 +14,22 @@ router.route("/signup")
 	res.send({});
 })
 .post(function(req, res, next) {
-	var userData = {
-		email: req.body.email,
-		firstname: req.body.firstname,
-		lastname: req.body.lastname,
-		password: req.body.password,
-		username: req.body.username,
-		admin: false
-	}
-	var user = new userModel(userData);
-	user.save(function(error, data){
-      if(error){
-          res.status(403).json(error);
-      }
-      else{
-          res.json(data);
-      }
+  userModel.find({ $or : [ { email : req.body.email}, { username : req.body.username } ] }, (err, result) => {
+    if (err) return res.status(500).json(err);
+    if (result && result.length > 0) return res.status(409).json(new Error('Username or email already exists'));
+    var userData = {
+      email: req.body.email,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      password: req.body.password,
+      username: req.body.username,
+      admin: false
+    }
+    var user = new userModel(userData);
+    user.save(function(error, data){
+      if(error) return res.status(403).json(error);
+      res.json(data);
+    });
   });
 });
 
