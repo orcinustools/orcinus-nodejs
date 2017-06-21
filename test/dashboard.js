@@ -16,7 +16,7 @@ var request = require('supertest');
 var should = require('should');
 var faker = require('faker');
 var password = faker.internet.password();
-var token;
+var username, email, token;
 
 const timeout = 5000;
 
@@ -25,6 +25,25 @@ const timeout = 5000;
 describe('Orcinus Dashboard', function() {
   describe('API', function() {
     it('Signup', function(done) {
+      this.timeout(timeout);
+      email = faker.internet.email();
+      request(server)
+      .post('/apis/auth/signup')
+      .send({ 
+        username : 'admin',
+        password : password,
+        email : email,
+        firstname : faker.name.firstName(),
+        lastname : faker.name.lastName(),
+        admin : true,
+      })
+      .end((err, res) => {
+        should(res.statusCode).equal(200);
+        var result = JSON.parse(res.text);
+        done();
+      });
+    });
+    it('Failed to signup with existing username', function(done) {
       this.timeout(timeout);
       request(server)
       .post('/apis/auth/signup')
@@ -37,7 +56,24 @@ describe('Orcinus Dashboard', function() {
         admin : true,
       })
       .end((err, res) => {
-        var result = JSON.parse(res.text);
+        should(res.statusCode).equal(409);
+        done();
+      });
+    });
+    it('Failed to signup with existing email', function(done) {
+      this.timeout(timeout);
+      request(server)
+      .post('/apis/auth/signup')
+      .send({ 
+        username : 'admin1',
+        password : password,
+        email : email,
+        firstname : faker.name.firstName(),
+        lastname : faker.name.lastName(),
+        admin : true,
+      })
+      .end((err, res) => {
+        should(res.statusCode).equal(409);
         done();
       });
     });
