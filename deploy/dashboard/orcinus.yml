@@ -16,6 +16,7 @@ services:
         - "ORCINUS_NETWROK=orcinus"
         volumes:
         - "docker"
+        - "local"
         networks:
         - "orcinus" # webserver network
         labels:
@@ -27,3 +28,7 @@ volumes:
         type: "bind"
         source: "/var/run/docker.sock"
         target: "/var/run/docker.sock"
+    local:
+        type: "bind"
+        source: "/root"
+        target: "/root"
