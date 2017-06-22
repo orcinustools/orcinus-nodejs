@@ -28,16 +28,24 @@ router.post("/",function(req, res, next){
 
 router.post("/create",function(req, res, next){
     var user = utils.decode(req,res);
-    utils.serviceManifest(user.id,req,res,function(req,res,manifest){
+    utils.serviceManifest(user.id,req,res,function(req,res,manifest,Auth){
         var parse  = new parser(manifest.opt);
         var opt = parse.services();
-        utils.debug(JSON.stringify(opt));
-
-        if(manifest.auth){
-            var auth = {"authconfig" : manifest.auth};
-        }
+        utils.debug(opt);
         var responseData = [];
+        // auth init
+        var auth = Auth;
         opt.forEach(function(ops,index){
+            //auth setup
+            var auth = undefined;
+            if(this.hasOwnProperty(ops.Name)){
+                var auth = this[ops.Name];
+                utils.debug(auth);
+            }
+
+            utils.debug("Auth test : ");
+            utils.debug(auth)
+
             req.app.locals.orcinus.createService(auth,ops,function (err, data) {
                 if(err){
                     var error = {};
@@ -57,7 +65,7 @@ router.post("/create",function(req, res, next){
                     res.send(responseData);
                 }
             });
-        });
+        },auth);
     });
 });
 
@@ -89,7 +97,7 @@ router.post("/update",function(req, res, next){
     var spec = new parser(req.body).update();
     var svc = req.app.locals.orcinus.getService(spec.Name);
     if(req.body.auth){
-        var auth = {"authconfig" : req.body.auth};
+        var auth = req.body.auth;
     }
 
     console.log(JSON.stringify(spec));

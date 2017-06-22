@@ -39,6 +39,7 @@
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.3",
     "debug": "~2.2.0",
+    "docker-parse-image": "^3.0.1",
     "express": "^4.15.2",
     "file-extension": "^3.1.2",
     "http-proxy": "^1.16.2",

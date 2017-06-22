@@ -16,10 +16,12 @@ UserSchema = new Schema({
   	required: true
   },
   username: { 
-  	type: String, 
-		required: true,
+  	type: String,
 		unique: true
 	},
+  phone: { 
+    type: String
+  },
   admin: { type: Boolean },
   verify: {
     type: Boolean,
