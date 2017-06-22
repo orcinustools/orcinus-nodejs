@@ -28,12 +28,12 @@ install:
 production: install
 			@echo "===> Install orcinus webserver"
 			@orcinus create -f ./deploy/webserver/orcinus.yml
+			@echo "===> Install orcinus database"
+			@orcinus create -f ./deploy/db/orcinus.yml
 			@echo "===> Install orcinus dashboard"
 			@orcinus create -f ./deploy/dashboard/orcinus.yml
 			@echo "===> Install orcinus repository"
 			@orcinus create -f ./deploy/repository/orcinus.yml
-			@echo "===> Install orcinus database"
-			@orcinus create -f ./deploy/db/orcinus.yml
 
 production-remove:
 			@echo "===> Remove orcinus webserver"
