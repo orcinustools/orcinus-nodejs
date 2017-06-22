@@ -11,6 +11,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var url = require("url");
 var colors = require('colors');
+var passport = require('passport');
 var orcinusd = require('orcinusd');
 var db = require("./db");
 var jwt = require('jsonwebtoken');
@@ -112,6 +113,8 @@ module.exports = function(){
   app.locals.secret = SECRET;
 
   app.use(express.static(path.join(__dirname, './www')));
+
+  app.use(passport.initialize());
 
   app.get('/',function(req,res){
       res.sendFile(path.join(__dirname, './www', 'index.html'));
