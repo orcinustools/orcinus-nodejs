@@ -1,4 +1,5 @@
-var package = require('./package.json')
+var package = require('./package.json');
+var compression = require('compression');
 var path 	= require('path');
 var express = require('express');
 var cors = require('cors');
@@ -28,15 +29,22 @@ module.exports = function(){
   var CORS = process.env.ORCINUS_HTTP_CORS || false;
   var SOCK = process.env.ORCINUS_DOCKER_SOCKET || "/var/run/docker.sock";
   var DBHOST = process.env.ORCINUS_DB || "orcinus-db/orcinus";
+  var OMURA = process.env.ORCINUS_OMURA || "omura.orcinus.id";
+
   if(!process.env.ORCINUS_SECRET){
     process.env.ORCINUS_SECRET = "orcinus"
   }
   var SECRET = process.env.ORCINUS_SECRET;
-  var OMURA = process.env.ORCINUS_OMURA || "omura.orcinus.id";
+
+  if(DEPLOYMENT === 'prod'){
+    process.env.NODE_ENV = production;
+  }
+
   if(!process.env.ORCINUS_DOMAIN){
     process.env.ORCINUS_DOMAIN = "svc.orcinus.id"
   }
   var ENDPOINT = process.env.ORCINUS_DOMAIN;
+
   if(!process.env.ORCINUS_NETWORK){
     process.env.ORCINUS_NETWORK = "orcinus"
   }
@@ -91,10 +99,14 @@ module.exports = function(){
     SOCK = { socketPath: SOCK };
   }
 
-  app.use(logger('dev'));
+  if(DEPLOYMENT === 'dev'){
+    app.use(logger('dev'));
+  }
+  
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(cookieParser());
+  app.use(compression());
 
   app.locals.orcinus = new orcinusd(SOCK);
   app.locals.secret = SECRET;
