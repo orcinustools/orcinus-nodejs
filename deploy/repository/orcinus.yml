@@ -12,3 +12,4 @@ services:
         labels:
             traefik.port: "8080"
             traefik.frontend.rule: "Host:omura.orcinus.id"
+            traefik.docker.network: "orcinus"
