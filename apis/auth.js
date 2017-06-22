@@ -18,14 +18,14 @@ router.route("/google-callback")
   if (!req.user || (req.user &&  !req.user.username)) {
     return res.redirect('/');
   }
-	var userJWT = {
-		username : req.user.username,
-		email : req.user.email,
-		id : req.user._id
-	};
-	var token = jwt.sign(userJWT, req.app.locals.secret, {
-	  expiresIn: 60*60 // expires in 1 hours
-	});
+  var userJWT = {
+    username : req.user.username,
+    email : req.user.email,
+    id : req.user._id
+  };
+  var token = jwt.sign(userJWT, req.app.locals.secret, {
+    expiresIn: 60*60 // expires in 1 hours
+  });
   res.send(`<script type="text/javascript">sessionStorage.setItem("orcinus","${token}"); window.location = "/";</script>`);
 });
 
