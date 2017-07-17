@@ -6,15 +6,17 @@ var jwt = require('jsonwebtoken');
 var jwtDecode = require('jwt-decode');
 var utils = require('../lib/utils.js');
 var userModel = mongoose.model('Users');
+var passport;
 
+/* Google OAuth */
 if (
   process.env.GOOGLE_OAUTH_CLIENT_ID &&
   process.env.GOOGLE_OAUTH_CLIENT_SECRET &&
   process.env.GOOGLE_OAUTH_CALLBACK_URL
 ) {
-  var passport = require('passport');
+  passport = require('passport');
   require(__dirname + '/passport.js')(passport);
-  /* Google OAuth */
+
   router.route("/google")
   .get(passport.authenticate('google', { scope : ['profile', 'email'] } ));
   
@@ -33,8 +35,37 @@ if (
     });
     res.send(`<script type="text/javascript">sessionStorage.setItem("orcinus","${token}"); window.location = "/";</script>`);
   });
+}
+
+/* Github OAuth */
+if (
+  process.env.GITHUB_OAUTH_CLIENT_ID &&
+  process.env.GITHUB_OAUTH_CLIENT_SECRET &&
+  process.env.GITHUB_OAUTH_CALLBACK_URL
+) {
+  if (!passport) {
+    passport = require('passport');
+    require(__dirname + '/passport.js')(passport);
+  }
+
+  router.route("/github")
+  .get(passport.authenticate('github', { scope : ['profile', 'email'] } ));
   
-  /* TODO FacebooktOAuth */
+  router.route("/github-callback")
+  .get(passport.authenticate('github'), (req, res) => {
+    if (!req.user || (req.user &&  !req.user.username)) {
+      return res.redirect('/');
+    }
+    var userJWT = {
+      username : req.user.username,
+      email : req.user.email,
+      id : req.user._id
+    };
+    var token = jwt.sign(userJWT, req.app.locals.secret, {
+      expiresIn: 60*60 // expires in 1 hours
+    });
+    res.send(`<script type="text/javascript">sessionStorage.setItem("orcinus","${token}"); window.location = "/";</script>`);
+  });
 }
 
 /* GET home page. */
