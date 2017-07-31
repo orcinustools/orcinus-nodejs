@@ -13,6 +13,7 @@ RUN set -ex \
     python \
 		build-base \
 		&& npm install \
+		&& npm rebuild bcrypt --build-from-source \
 		&& apk del .build-deps
 
 
