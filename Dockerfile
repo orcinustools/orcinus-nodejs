@@ -12,8 +12,7 @@ RUN set -ex \
     && apk add --update --no-cache --virtual .build-deps \
     python \
 		build-base \
-		&& npm install \
-		&& npm rebuild bcrypt --build-from-source \
+		&& yarn install \
 		&& apk del .build-deps
 
 
