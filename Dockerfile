@@ -4,7 +4,7 @@ MAINTAINER ibnu yahya <anak10thn@gmail.com>
 ENV LANG=C.UTF-8 LC_ALL=C
 ENV NODE_PATH=/usr/lib/node_modules
 
-RUN mkdir -p /opt/orcinus		
+RUN mkdir -p /opt/orcinus
 COPY . /opt/orcinus
 WORKDIR /opt/orcinus
 
