@@ -13,7 +13,7 @@ RUN set -ex \
     python \
 		build-base \
 		&& yarn install \
-                && yarn rebuild bcrypt --build-from-source
+                && yarn rebuild bcrypt --build-from-source \
 		&& apk del .build-deps
 
 
