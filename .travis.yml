@@ -1,0 +1,24 @@
+sudo: required
+group: edge
+
+services:
+- docker
+
+node_js:
+- '7'
+
+script:
+- make test
+- if [ -n "$TRAVIS_TAG" ]; then make prebuild; make build; mv bin/orcinus bin/orcinus-$TRAVIS_TAG-$(uname -s)-$(uname -m).bin; fi
+
+deploy:
+  provider: releases
+  api_key:
+    secure: kDHPvhdZrf81ahiKtDwDTPo3GnAqOPJjMfvoWlzW8cbUoNVP3KklESMrkLa4pXThdNXYS7HdhBALd1BdlKHMTixjyLKVOVyHB4ncN94qjdaj1Ow5dsyj6XqU8c+cse0qhPs2+1HwMOtT7ruPPEypn+9UJHk2pQqeQPdhuugnOnA5W6YU5FzHS5Ea5+DIfUrf4gbvEEbnUZ4881pSjp6WbHwAfFNNUHKAcMmnFy3yOC0oUsY2lmvujOc4nceyy+au6OabRxt3XNegCa6A2/pFkBtb/Fb2cW2PCXmlm8Jhww/MAJXre95Rrwix/ockJHcvw1e1qxBdIIuvBG0M8dcPTtUZ1upsJj8hMr1MsRxH3YGe2a/fNY5GQ2RKbc09JlDP9/iECIsla0AnsdzZLH8rJH6qFy49/DxOJyqZ9koFccbPw1DAwhSLRAVKr6vzfYszEtUt38TQcCSfCAS74alo6aWkNvS6nlrusudQ8SuV7RUCx4pJii8LUxeDNfbbmAG2XxNMIedHYkv6x+qOEyLayf+tk7wWmFbYm3y8yPp68lqnsu9tO02bP7huh7iVsEU8vE8V1aahkgI6UBZeU/ZNOzko/HRxckiJd2W1C0j2ClBTBJYkO/EJxTFY0cvnw1WaRLe9zb9Vq8RNFpxL2VkFaheQoFoZamiy5cpAsAZQaoI=
+  file_glob: true
+  file: bin/*
+  skip_cleanup: true
+  on:
+    repo: orcinustools/orcinus
+    branch: master
+    tags: true

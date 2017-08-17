@@ -1,0 +1,7 @@
+stack: "orcinus"
+services:
+    wweb2:
+        image: "emilevauge/whoami"
+        labels:
+            traefik.port: "80"
+            traefik.frontend.rule: "Host:overwrite.domain"

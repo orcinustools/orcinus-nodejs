@@ -1,10 +1,11 @@
 {
   "name": "orcinus",
-  "version": "0.1.4",
-  "description": "Docker Swarm Compose Tools",
+  "version": "0.3.0",
+  "description": "Container orchestration tools",
   "main": "cli.js",
   "scripts": {
-    "test": "node test/pre-post.js pre && sleep 5 && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test/test.js && node test/pre-post.js post"
+    "test": "node test/pre-post.js pre && sleep 5 && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test/test.js && node test/pre-post.js post",
+    "dashboard-test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test/dashboard.js"
   },
   "bin": {
     "orcinus": "./cli.js"
@@ -27,22 +28,35 @@
   },
   "homepage": "https://github.com/anak10thn/orcinus#readme",
   "dependencies": {
+    "async": "^2.4.1",
     "base-64": "^0.1.0",
+    "bcrypt": "^1.0.2",
     "body-parser": "~1.15.1",
+    "bytes": "^2.5.0",
     "colors": "^1.1.2",
     "commander": "^2.9.0",
+    "compression": "^1.6.2",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.3",
     "debug": "~2.2.0",
+    "docker-parse-image": "^3.0.1",
     "express": "^4.15.2",
     "file-extension": "^3.1.2",
     "http-proxy": "^1.16.2",
-    "istanbul": "^0.4.5",
     "jade": "~1.11.0",
-    "mocha": "^3.2.0",
+    "jsonwebtoken": "^7.4.1",
+    "jwt-decode": "^2.2.0",
+    "md5": "^2.2.1",
+    "mongoose": "^4.10.5",
     "morgan": "~1.7.0",
+    "orcinusd": "^0.3.3",
+    "passport": "^0.3.2",
+    "passport-github": "^1.1.0",
+    "passport-google-oauth": "^1.0.0",
+    "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "serve-favicon": "~2.3.0",
-    "should": "^11.2.1",
+    "urandom": "0.0.2",
     "utf8": "^2.1.2",
     "yamljs": "^0.2.8"
   },
@@ -57,8 +71,15 @@
     ],
     "runtime": {
       "framework": "node",
-      "version": "5.10.0",
+      "version": "7.7.2",
       "ignoreFlags": true
     }
+  },
+  "devDependencies": {
+    "faker": "^4.1.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
+    "should": "^11.2.1",
+    "supertest": "^3.0.0"
   }
 }

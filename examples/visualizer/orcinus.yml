@@ -1,7 +1,7 @@
 stack: "mystack"
 services:
   visualizer:
-    image: "manomarks/visualizer"
+    image: "dockersamples/visualizer"
     ports:
     - "5000:8080"
     constraint: "node.role==manager"

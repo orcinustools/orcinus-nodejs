@@ -1,8 +1,8 @@
-PREFIX := /usr/local/bin
 CONFIG_DIRS := config
 SRC := $(PWD)
+VERSION := 0.2.7
 
-.PHONY: all clean build frontend install prebuild orcinusd docker push run
+.PHONY: all clean build frontend install prebuild docker production production-remove push run test
 
 all: build
 
@@ -15,30 +15,50 @@ frontend:
 			mv ./dashboard/dist www
 			rm -rf dashboard
 
-build: frontend
+build:
 			npm install
 			nexe
+			mkdir bin
+			mv orcinus bin/orcinus
 
 install:
-			cp -rf orcinus $(PREFIX)
+			@echo "===> Install orcinus CLI"
+			@npm install -g
+
+production: install
+			@echo "===> Install orcinus webserver"
+			@orcinus create -f ./deploy/webserver/orcinus.yml
+			@echo "===> Install orcinus database"
+			@orcinus create -f ./deploy/db/orcinus.yml
+			@echo "===> Install orcinus dashboard"
+			@orcinus create -f ./deploy/dashboard/orcinus.yml
+			@echo "===> Install orcinus repository"
+			@orcinus create -f ./deploy/repository/orcinus.yml
+
+production-remove:
+			@echo "===> Remove orcinus webserver"
+			@orcinus rm -f ./deploy/webserver/orcinus.yml
+			@echo "===> Remove orcinus dashboard"
+			@orcinus rm -f ./deploy/dashboard/orcinus.yml
+			@echo "===> Remove orcinus repository"
+			@orcinus rm -f ./deploy/repository/orcinus.yml
+			@echo "===> Remove orcinus database"
+			@orcinus rm -f ./deploy/db/orcinus.yml
 
 clean:
-			rm -rf build orcinus www
-
-orcinusd:
-			systemctl stop docker
-			systemctl disable docker
-			cp $(CONFIG_DIRS)/orcinusd.service /lib/systemd/system
-			chmod 644 /lib/systemd/system/orcinusd.service
-			systemctl enable orcinusd
-			systemctl start orcinusd
+			rm -rf build bin www coverage
 
 docker:
-			docker build -t orcinus/orcinus:latest .
+			docker build -t orcinus/orcinus:$(VERSION) .
+			docker tag orcinus/orcinus:$(VERSION) orcinus/orcinus:latest
 
-push:
+push:	docker
+			docker push orcinus/orcinus:$(VERSION)
 			docker push orcinus/orcinus:latest
 
 run:
 			echo "Dashboard starting.........."
 			node cli.js dashboard
+test:
+			npm install
+			npm run test

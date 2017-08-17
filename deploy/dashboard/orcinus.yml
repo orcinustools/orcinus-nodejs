@@ -1,0 +1,34 @@
+# testing :
+#
+# curl -H Host:dashboard.orcinus.id http://127.0.0.1
+
+stack: "orcinus-dashboard"
+services:
+    orcinus-dashboard:
+        image: "orcinus/orcinus:dev"
+        constraint: "node.role==manager"
+        environment:
+        - "ORCINUS=dev"
+        - "ORCINUS_HTTP_CORS='*'"
+        - "ORCINUS_OMURA='http://omura.orcinus.id'"
+        - "ORCINUS_DB=orcinus-db/orcinus"
+        - "ORCINUS_DOMAIN=svc.orcinus.id"
+        - "ORCINUS_NETWROK=orcinus"
+        volumes:
+        - "docker"
+        - "local"
+        networks:
+        - "orcinus" # webserver network
+        labels:
+            traefik.port: "4000"
+            traefik.frontend.rule: "Host:dashboard.orcinus.id"
+            traefik.docker.network: "orcinus"
+volumes:
+    docker:
+        type: "bind"
+        source: "/var/run/docker.sock"
+        target: "/var/run/docker.sock"
+    local:
+        type: "bind"
+        source: "/root"
+        target: "/root"

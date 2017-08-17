@@ -56,7 +56,7 @@ if(program.file){
   //cliValidation();
 }
 
-if(!program.dashboard){
+if(!program.dashboard && !program.cluster && !program.ls && !program.scale){
   if(!data){
     var defaultManifest = "orcinus";
     // Favor yaml over json
@@ -162,7 +162,7 @@ if(program.dashboard){
     process.env['ORCINUS_PORT'] = environtment[1];
   }
   else{
-    process.env['ORCINUS_HOST'] = "127.0.0.1";
+    process.env['ORCINUS_HOST'] = "0.0.0.0";
     process.env['ORCINUS_PORT'] = "4000";
   }
   web();

@@ -1,0 +1,48 @@
+# testing :
+#
+# curl -H Host:whoami.traefik http://127.0.0.1
+#
+# Hostname: 8147a7746e7a
+# IP: 127.0.0.1
+# IP: ::1
+# IP: 10.0.9.3
+# IP: fe80::42:aff:fe00:903
+# IP: 172.18.0.3
+# IP: fe80::42:acff:fe12:3
+# GET / HTTP/1.1
+# Host: 10.0.9.3:80
+# User-Agent: curl/7.35.0
+# Accept: */*
+# Accept-Encoding: gzip
+# X-Forwarded-For: 192.168.99.1
+# X-Forwarded-Host: 10.0.9.3:80
+# X-Forwarded-Proto: http
+# X-Forwarded-Server: 8fbc39271b4c
+
+
+stack: "orcinus"
+services:
+    treafik:
+        image: "traefik"
+        ports:
+        - "80:80"
+        - "8080:8080"
+        constraint: "node.role==manager"
+        commands:
+        - "--docker"
+        - "--docker.swarmmode"
+        - "--docker.domain=traefik"
+        - "--docker.watch"
+        - "--web"
+        volumes:
+        - "docker"
+    whoami:
+        image: "emilevauge/whoami"
+        labels:
+            traefik.port: "80"
+
+volumes:
+    docker:
+        type: "bind"
+        source: "/var/run/docker.sock"
+        target: "/var/run/docker.sock"

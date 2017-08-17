@@ -1,4 +1,6 @@
 # Orcinus
+![Build Status](https://travis-ci.org/orcinustools/orcinus.svg?branch=dev)
+
 Container orchestration management tools for docker swarm mode.
 
 # Quick Start
@@ -120,17 +122,25 @@ Service web1 created
 50a7ftc5f1jjvsz09h1bwt487
 # list Services
 [root@192.168.7.11 test]$ orcinus ls
-2cct8xzckyfw  web2  0/1       nginx  
+2cct8xzckyfw  web2  0/1       nginx
 
 50a7ftc5f1jj  web1  3/3       aksaramaya/docker-http-server
 # remove service
 root@192.168.7.11 test]$ orcinus rm
 ```
 
-#### Test
+### Test
+
+#### Orcinus CLI
 
 ```
 $ npm run test
+```
+
+#### Dashboard APIs
+
+```
+$ npm run dashboard-test
 ```
 
 # Documentation
