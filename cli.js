@@ -19,6 +19,7 @@ var scale = require("./lib/scale");
 var ps = require("./lib/ps");
 var rm = require("./lib/rm");
 var inspect = require("./lib/inspect");
+var inspect = require("./lib/rollback");
 var cluster = require("./lib/cluster");
 
 /*module dashboard*/
@@ -34,6 +35,7 @@ program
 .option('scale [service_name=num_scale]', 'scale service')
 .option('inspect', 'Inspect all service')
 .option('update', 'Update service')
+.option('rollback', 'Rollback service')
 .option('dashboard', 'Start dashboard <hostname:port>')
 .option('cluster [option|help]', 'Manage Cluster',/^(init|join|leave|leave-manager|ls|token|promote|inspect|option|--help|-h)$/i)
 .parse(process.argv);
@@ -85,6 +87,13 @@ if(program.update){
     err()
   }
   update.init(data);
+}
+
+if(program.rollback){
+  if(!data){
+    err()
+  }
+  rollback.init(data);
 }
 
 if(program.ls){
