@@ -19,7 +19,7 @@ var scale = require("./lib/scale");
 var ps = require("./lib/ps");
 var rm = require("./lib/rm");
 var inspect = require("./lib/inspect");
-var inspect = require("./lib/rollback");
+var rollback = require("./lib/rollback");
 var cluster = require("./lib/cluster");
 
 /*module dashboard*/
