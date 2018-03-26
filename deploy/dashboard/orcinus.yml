@@ -11,7 +11,7 @@ services:
         - "ORCINUS=dev"
         - "ORCINUS_HTTP_CORS='*'"
         - "ORCINUS_OMURA='http://omura.orcinus.id'"
-        - "ORCINUS_DB=orcinus-db/orcinus"
+        - "ORCINUS_DB=mongodb://orcinus-db/orcinus"
         - "ORCINUS_DOMAIN=svc.orcinus.id"
         - "ORCINUS_NETWROK=orcinus"
         volumes:
