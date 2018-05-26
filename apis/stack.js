@@ -71,8 +71,8 @@ router.post("/list-services",function(req, res, next){
         else{
             if(data.length > 0){
                 var obj = data.filter(function ( obj ) {
-                    var chk = obj.Spec.Networks.filter(function(objFil){
-                    return objFil.Target === stackID;
+                    var chk = obj.Endpoint.VirtualIPs.filter(function(objFil){
+                    return objFil.NetworkID == stackID;
                     });
                     if(chk.length == 0){
                         chk = false;
