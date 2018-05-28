@@ -5,7 +5,7 @@
 stack: "orcinus-dashboard"
 services:
     orcinus-dashboard:
-        image: "orcinus/orcinus:dev"
+        image: "orcinus/orcinus:0.4.0"
         constraint: "node.role==manager"
         environment:
         - "ORCINUS=dev"
