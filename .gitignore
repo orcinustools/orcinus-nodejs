@@ -14,3 +14,4 @@ lib/lcov.info
 config.js
 orcinus.dll
 package-lock.json
+yarn.lock
