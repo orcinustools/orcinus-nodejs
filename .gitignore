@@ -13,3 +13,4 @@ lib/lcov-report/
 lib/lcov.info
 config.js
 orcinus.dll
+package-lock.json
