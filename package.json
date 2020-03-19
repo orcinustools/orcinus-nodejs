@@ -47,7 +47,7 @@
     "jwt-decode": "^2.2.0",
     "md5": "^2.2.1",
     "mongoose": "^4.10.5",
-    "morgan": "~1.7.0",
+    "morgan": "~1.9.1",
     "orcinusd": "^0.4.0",
     "passport": "^0.3.2",
     "passport-github": "^1.1.0",
