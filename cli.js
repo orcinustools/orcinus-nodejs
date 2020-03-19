@@ -169,7 +169,7 @@ if(program.cluster){
 if(program.logs){
   var args = program.args;
   var cli = program.logs;
-  cluster.start(cli,args);
+  logs.start(cli,args);
 }
 
 if(program.dashboard){
