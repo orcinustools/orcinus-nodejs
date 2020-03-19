@@ -21,6 +21,7 @@ var rm = require("./lib/rm");
 var inspect = require("./lib/inspect");
 var rollback = require("./lib/rollback");
 var cluster = require("./lib/cluster");
+var logs = require("./lib/logs");
 
 /*module dashboard*/
 var web = require("./server");
@@ -32,11 +33,12 @@ program
 .option('rm','Remove all service')
 .option('ls [all|orcinus file|service name]', 'List service')
 .option('ps', 'List all process')
-.option('scale [service_name=num_scale]', 'scale service')
+.option('scale [service_name=num_scale]', 'Scale service')
 .option('inspect', 'Inspect all service')
 .option('update', 'Update service')
 .option('rollback', 'Rollback service')
 .option('dashboard', 'Start dashboard <hostname:port>')
+.option('logs [follow|help|tail]', 'Get service logs')
 .option('cluster [option|help]', 'Manage Cluster',/^(init|join|leave|leave-manager|ls|token|promote|inspect|option|--help|-h)$/i)
 .parse(process.argv);
 
@@ -58,7 +60,7 @@ if(program.file){
   //cliValidation();
 }
 
-if(!program.dashboard && !program.cluster && !program.ls && !program.scale){
+if(!program.dashboard && !program.cluster && !program.ls && !program.scale && !program.logs){
   if(!data){
     var defaultManifest = "orcinus";
     // Favor yaml over json
@@ -162,6 +164,12 @@ if(program.cluster){
   var args = program.args;
   var cli = program.cluster;
   cluster.start(cli,args);
+}
+
+if(program.logs){
+  var args = program.args;
+  var cli = program.logs;
+  logs.start(cli,args);
 }
 
 if(program.dashboard){
