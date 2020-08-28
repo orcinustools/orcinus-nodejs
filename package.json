@@ -1,6 +1,6 @@
 {
   "name": "orcinus",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Container orchestration tools",
   "main": "cli.js",
   "scripts": {
@@ -30,7 +30,7 @@
   "dependencies": {
     "async": "^2.4.1",
     "base-64": "^0.1.0",
-    "bcrypt": "^2.0.1",
+    "bcrypt": ">=5.0.0",
     "body-parser": "~1.15.1",
     "bytes": "^2.5.0",
     "colors": "^1.1.2",
