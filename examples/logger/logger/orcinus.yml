@@ -4,6 +4,9 @@ services:
       image: amir20/dozzle:latest
       auth: true
       constraint: "node.role==manager"
+      environment:
+        - DOZZLE_HOSTNAME=node1
+        - DOZZLE_REMOTE_HOST="tcp://10.10.100.1:2375|node2,tcp://10.10.100.2:2375|node3"
       volumes:
         - "docker"
 volumes:
