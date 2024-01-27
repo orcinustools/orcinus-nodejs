@@ -1,0 +1,19 @@
+stack: "orcinus"
+services:
+    proxy:
+      image: tecnativa/docker-socket-proxy:nightly
+      auth: true
+      ports:
+        - "2375:2375"
+      environment:
+        - CONTAINERS=1
+      mode: global
+      constraint: "node.role==worker"
+      volumes:
+        - docker
+
+volumes:
+    docker:
+        type: "bind"
+        source: "/var/run/docker.sock"
+        target: "/var/run/docker.sock"

@@ -1,0 +1,13 @@
+stack: "orcinus"
+services:
+    logger:
+      image: amir20/dozzle:latest
+      auth: true
+      constraint: "node.role==manager"
+      volumes:
+        - "docker"
+volumes:
+    docker:
+        type: "bind"
+        source: "/var/run/docker.sock"
+        target: "/var/run/docker.sock"
